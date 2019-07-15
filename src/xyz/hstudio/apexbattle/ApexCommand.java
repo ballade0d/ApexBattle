@@ -1,6 +1,5 @@
 package xyz.hstudio.apexbattle;
 
-import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,18 +7,24 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import xyz.hstudio.apexbattle.game.Game;
 import xyz.hstudio.apexbattle.game.internal.ItemHandler;
-import xyz.hstudio.apexbattle.util.ColorUtil;
+import xyz.hstudio.apexbattle.util.GameUtil;
 import xyz.hstudio.apexbattle.util.NumberUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Set;
 
 public class ApexCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 0) {
+            sender.sendMessage("§6§lApexBattle §7§l>> §r§eApexBattle 1.0 by MrCraftGoo");
+            return true;
+        }
         if (sender.isOp()) {
             switch (args[0].toLowerCase()) {
                 case "create": {
@@ -42,11 +47,12 @@ public class ApexCommand implements CommandExecutor {
                         }
                         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                         config.set("name", args[1]);
-                        config.set("team_size", args[2]);
-                        config.set("min_player", args[3]);
-                        config.set("max_player", args[4]);
+                        config.set("team_size", Integer.parseInt(args[2]));
+                        config.set("min_player", Integer.parseInt(args[3]));
+                        config.set("max_player", Integer.parseInt(args[4]));
                         try {
                             config.save(file);
+                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e创建成功！");
                         } catch (IOException e) {
                             e.printStackTrace();
                             sender.sendMessage("§6§lApexBattle §7§l>> §r§e创建游戏失败！");
@@ -82,6 +88,7 @@ public class ApexCommand implements CommandExecutor {
                             config.set("lobby.pitch", pitch);
                             try {
                                 config.save(file);
+                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置成功！");
                             } catch (IOException e) {
                                 e.printStackTrace();
                                 sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
@@ -109,13 +116,19 @@ public class ApexCommand implements CommandExecutor {
                             sender.sendMessage("§6§lApexBattle §7§l>> §r§e队伍已存在！");
                             return true;
                         }
-                        Color color = ColorUtil.getColor(args[2]);
-                        if (color == null) {
+                        if (Arrays.stream(DyeColor.values()).noneMatch(v -> v.name().equals(args[2]))) {
                             sender.sendMessage("§6§lApexBattle §7§l>> §r§e颜色错误！");
                             return true;
                         }
-                        DyeColor dyeColor = DyeColor.getByColor(color);
-                        config.set("teams." + args[3] + ".color", dyeColor.name());
+                        config.set("teams." + args[3] + ".color", args[2]);
+                        try {
+                            config.save(file);
+                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e队伍创建成功！");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
+                            return true;
+                        }
                     } else {
                         sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
                         return true;
@@ -142,14 +155,15 @@ public class ApexCommand implements CommandExecutor {
                             double z = p.getLocation().getZ();
                             float yaw = p.getLocation().getYaw();
                             float pitch = p.getLocation().getPitch();
-                            config.set("teams." + args[1] + ".world", world);
-                            config.set("teams." + args[1] + "x", x);
-                            config.set("teams." + args[1] + "y", y);
-                            config.set("teams." + args[1] + "z", z);
-                            config.set("teams." + args[1] + "yaw", yaw);
-                            config.set("teams." + args[1] + "pitch", pitch);
+                            config.set("teams." + args[2] + ".world", world);
+                            config.set("teams." + args[2] + ".x", x);
+                            config.set("teams." + args[2] + ".y", y);
+                            config.set("teams." + args[2] + ".z", z);
+                            config.set("teams." + args[2] + ".yaw", yaw);
+                            config.set("teams." + args[2] + ".pitch", pitch);
                             try {
                                 config.save(file);
+                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e队伍设置成功！");
                             } catch (IOException e) {
                                 e.printStackTrace();
                                 sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
@@ -178,14 +192,18 @@ public class ApexCommand implements CommandExecutor {
                                 return true;
                             }
                             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                            Set<String> sections = config.getConfigurationSection("resource").getKeys(false);
                             int max = -1;
-                            for (String section : sections) {
-                                if (NumberUtil.isInt(section) && Integer.parseInt(section) > max) {
-                                    max = Integer.parseInt(section);
+                            if (config.isSet("resource")) {
+                                Set<String> sections = config.getConfigurationSection("resource").getKeys(false);
+                                for (String section : sections) {
+                                    if (NumberUtil.isInt(section) && Integer.parseInt(section) > max) {
+                                        max = Integer.parseInt(section);
+                                    }
                                 }
+                                max++;
+                            } else {
+                                max = 1;
                             }
-                            max++;
                             Player p = (Player) sender;
                             String world = p.getWorld().getName();
                             double x = p.getLocation().getX();
@@ -194,14 +212,15 @@ public class ApexCommand implements CommandExecutor {
                             float yaw = p.getLocation().getYaw();
                             float pitch = p.getLocation().getPitch();
                             config.set("resource." + max + ".type", args[2]);
-                            config.set("resource." + max + ".x", x);
                             config.set("resource." + max + ".world", world);
+                            config.set("resource." + max + ".x", x);
                             config.set("resource." + max + ".y", y);
                             config.set("resource." + max + ".z", z);
                             config.set("resource." + max + ".yaw", yaw);
                             config.set("resource." + max + ".pitch", pitch);
                             try {
                                 config.save(file);
+                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e资源点添加成功！");
                             } catch (IOException e) {
                                 e.printStackTrace();
                                 sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
@@ -258,6 +277,7 @@ public class ApexCommand implements CommandExecutor {
                                 config.set("region.z2", p.getLocation().getZ());
                                 try {
                                     config.save(file);
+                                    sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置成功！");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                     sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
@@ -274,9 +294,42 @@ public class ApexCommand implements CommandExecutor {
                     }
                     break;
                 }
-                default:{
+                default: {
                     sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
                     return true;
+                }
+            }
+        } else {
+            switch (args[0]) {
+                case "join": {
+                    if (sender instanceof Player) {
+                        if (args.length == 2) {
+                            Player p = (Player) sender;
+                            Game game = GameUtil.getPlayingGame(p);
+                            if (game != null) {
+                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e你已经在游戏中了！");
+                                return true;
+                            }
+                            for (Game join : Game.getGames()) {
+                                if (join.getName().equals(args[1])) {
+                                    if (join.getStatus() == Game.GameStatus.WAITING) {
+                                        join.onJoin(p);
+                                    } else {
+                                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e现在无法加入该游戏！");
+                                        return true;
+                                    }
+                                    break;
+                                }
+                            }
+                        } else {
+                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
+                            return true;
+                        }
+                    } else {
+                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e该指令只能由玩家执行！");
+                        return true;
+                    }
+                    break;
                 }
             }
         }

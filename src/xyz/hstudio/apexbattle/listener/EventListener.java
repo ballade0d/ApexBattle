@@ -5,13 +5,17 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import xyz.hstudio.apexbattle.ApexBattle;
 import xyz.hstudio.apexbattle.game.Game;
+import xyz.hstudio.apexbattle.game.GamePlayer;
 import xyz.hstudio.apexbattle.game.internal.ItemHandler;
 import xyz.hstudio.apexbattle.util.GameUtil;
 import xyz.hstudio.apexbattle.util.ItemUtil;
@@ -31,6 +35,9 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(final PlayerInteractEvent e) {
+        if (e.getClickedBlock() == null) {
+            return;
+        }
         if (e.getClickedBlock().getType().name().contains("SIGN")) {
             Sign sign = (Sign) e.getClickedBlock();
             for (Game game : Game.getGames()) {
@@ -53,7 +60,7 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(final PlayerDeathEvent e) {
         Player p = e.getEntity();
         Game game = GameUtil.getPlayingGame(p);
@@ -65,12 +72,43 @@ public class EventListener implements Listener {
                 if (ItemUtil.isSimilar(itemStack, ItemHandler.protectedItem.createItem())) {
                     if (itemStack.getDurability() - decrease <= 0) {
                         game.setStatus(Game.GameStatus.ENDING);
-                        game.getGamePlayer(p).getTeam().win();
+                        GamePlayer gamePlayer = game.getGamePlayer(p);
+                        gamePlayer.getTeam().win();
+                        String msg = "§f恭喜 " + gamePlayer.getTeam().getColor().name() + " 队赢得比赛";
+                        for (Game.Team team : game.getTeams()) {
+                            if (team != gamePlayer.getTeam()) {
+                                for (GamePlayer lose : team.getGamePlayers()) {
+                                    lose.sendTitle(msg);
+                                }
+                            }
+                        }
                     } else {
                         itemStack.setDurability((short) (itemStack.getDurability() - decrease));
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerRespawn(final PlayerRespawnEvent e) {
+        Player p = e.getPlayer();
+        Game game = GameUtil.getPlayingGame(p);
+        if (game != null && game.getStatus() == Game.GameStatus.GAMING) {
+            GamePlayer gamePlayer = game.getGamePlayer(p);
+            e.setRespawnLocation(gamePlayer.getTeam().getSpawn());
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(final EntityDamageEvent e) {
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
+        Player p = (Player) e.getEntity();
+        Game game = GameUtil.getPlayingGame(p);
+        if (game != null && game.getStatus() == Game.GameStatus.WAITING) {
+            e.setCancelled(true);
         }
     }
 }

@@ -38,4 +38,23 @@ public class AABB implements Cloneable {
         }
         return !(max.getZ() < other.getMin().getZ()) && !(min.getZ() > other.getMax().getZ());
     }
+
+    public AABB translate(final Vector vector) {
+        min.add(vector);
+        max.add(vector);
+        return this;
+    }
+
+    public AABB clone() {
+        AABB clone;
+        try {
+            clone = (AABB) super.clone();
+            clone.min = this.min.clone();
+            clone.max = this.max.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

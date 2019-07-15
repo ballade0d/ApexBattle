@@ -2,6 +2,7 @@ package xyz.hstudio.apexbattle.game;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.server.v1_12_R1.DamageSource;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -13,11 +14,12 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import xyz.hstudio.apexbattle.ApexBattle;
 import xyz.hstudio.apexbattle.game.internal.ItemHandler;
 import xyz.hstudio.apexbattle.util.AABB;
-import xyz.hstudio.apexbattle.util.ColorUtil;
 import xyz.hstudio.apexbattle.util.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 
 public class Game {
@@ -69,12 +71,12 @@ public class Game {
                         section.contains("pitch");
         checkResource = section ->
                 section.contains("type") &&
-                        section.contains("loc.world") &&
-                        section.contains("loc.x") &&
-                        section.contains("loc.y") &&
-                        section.contains("loc.z") &&
-                        section.contains("loc.yaw") &&
-                        section.contains("loc.pitch");
+                        section.contains("world") &&
+                        section.contains("x") &&
+                        section.contains("y") &&
+                        section.contains("z") &&
+                        section.contains("yaw") &&
+                        section.contains("pitch");
     }
 
     public static void load() {
@@ -83,7 +85,10 @@ public class Game {
         gaming = conf.getStringList("sign.gaming");
         stop = conf.getStringList("sign.stop");
         for (FileConfiguration config : ApexBattle.getInst().getGames()) {
-            ConfigurationSection section = config.getDefaultSection();
+            ConfigurationSection section = config.getConfigurationSection("");
+            if (section == null) {
+                continue;
+            }
             if (checkConfig.test(section)) {
                 String name = section.getString("name");
                 int team_size = section.getInt("team_size");
@@ -94,14 +99,17 @@ public class Game {
                     Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：大厅出生地不存在");
                     continue;
                 }
-                AABB aabb = null;
-                Location lobby = new Location(lobbyWorld, section.getDouble("x"), section.getDouble("y"), section.getDouble("z"), (float) section.getDouble("yaw"), (float) section.getDouble("pitch"));
+                AABB aabb;
+                Location lobby = new Location(lobbyWorld, section.getDouble("lobby.x"), section.getDouble("lobby.y"), section.getDouble("lobby.z"), (float) section.getDouble("lobby.yaw"), (float) section.getDouble("lobby.pitch"));
 
                 List<SignHandler> signList = new ArrayList<>();
                 List<Team> teamList = new ArrayList<>();
                 List<Resource> resourceList = new ArrayList<>();
 
                 ConfigurationSection region = section.getConfigurationSection("region");
+                if (region == null) {
+                    continue;
+                }
                 if (checkRegion.test(region)) {
                     World world = Bukkit.getWorld(region.getString("world"));
                     if (world == null) {
@@ -121,31 +129,35 @@ public class Game {
                 }
 
                 ConfigurationSection signs = section.getConfigurationSection("signs");
-                for (String sign : signs.getKeys(false)) {
-                    ConfigurationSection signSection = signs.getConfigurationSection(sign);
-                    if (checkSign.test(signSection)) {
-                        World world = Bukkit.getWorld(signSection.getString("world"));
-                        if (world == null) {
-                            continue;
-                        }
-                        double x = signSection.getDouble("x");
-                        double y = signSection.getDouble("y");
-                        double z = signSection.getDouble("z");
+                if (signs != null) {
+                    for (String sign : signs.getKeys(false)) {
+                        ConfigurationSection signSection = signs.getConfigurationSection(sign);
+                        if (checkSign.test(signSection)) {
+                            World world = Bukkit.getWorld(signSection.getString("world"));
+                            if (world == null) {
+                                continue;
+                            }
+                            double x = signSection.getDouble("x");
+                            double y = signSection.getDouble("y");
+                            double z = signSection.getDouble("z");
 
-                        signList.add(new SignHandler(world, x, y, z));
+                            signList.add(new SignHandler(world, x, y, z));
+                        }
                     }
                 }
 
                 ConfigurationSection teams = section.getConfigurationSection("teams");
+                if (teams == null) {
+                    continue;
+                }
                 for (String team : teams.getKeys(false)) {
                     ConfigurationSection teamSection = teams.getConfigurationSection(team);
                     if (checkTeam.test(teamSection)) {
-                        Color color = ColorUtil.getColor(teamSection.getString("color"));
-                        if (color == null) {
+                        if (Arrays.stream(DyeColor.values()).noneMatch(v -> v.name().equals(teamSection.getString("color")))) {
                             Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：队伍 " + team + " 的颜色错误");
                             continue;
                         }
-                        DyeColor dyeColor = DyeColor.getByColor(color);
+                        DyeColor dyeColor = DyeColor.valueOf(teamSection.getString("color"));
                         World world = Bukkit.getWorld(teamSection.getString("world"));
                         if (world == null) {
                             Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：队伍 " + team + " 的出生点不存在");
@@ -163,8 +175,11 @@ public class Game {
                     }
                 }
 
-                ConfigurationSection resources = section.getConfigurationSection("resources");
-                for (String resource : teams.getKeys(false)) {
+                ConfigurationSection resources = section.getConfigurationSection("resource");
+                if (resources == null) {
+                    continue;
+                }
+                for (String resource : resources.getKeys(false)) {
                     ConfigurationSection resourceSection = resources.getConfigurationSection(resource);
                     if (checkResource.test(resourceSection)) {
                         String type = resourceSection.getString("type");
@@ -172,17 +187,17 @@ public class Game {
                             Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：资源类型不存在");
                             continue;
                         }
-                        World world = Bukkit.getWorld(resourceSection.getString("loc.world"));
+                        World world = Bukkit.getWorld(resourceSection.getString("world"));
                         if (world == null) {
                             Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：资源 " + resource + " 的出生点不存在");
                             continue;
                         }
                         ItemHandler itemHandler = ItemHandler.resource.stream().filter(res -> res.getId().equals(type)).findFirst().get();
-                        double x = resourceSection.getDouble("loc.x");
-                        double y = resourceSection.getDouble("loc.y");
-                        double z = resourceSection.getDouble("loc.z");
-                        float yaw = (float) resourceSection.getDouble("loc.yaw");
-                        float pitch = (float) resourceSection.getDouble("loc.pitch");
+                        double x = resourceSection.getDouble("x");
+                        double y = resourceSection.getDouble("y");
+                        double z = resourceSection.getDouble("z");
+                        float yaw = (float) resourceSection.getDouble("yaw");
+                        float pitch = (float) resourceSection.getDouble("pitch");
                         resourceList.add(new Resource(itemHandler, world, x, y, z, yaw, pitch));
                     } else {
                         Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：资源点配置缺少必要节点");
@@ -199,6 +214,7 @@ public class Game {
     }
 
     // 游戏基本信息
+    @Getter
     private final String name;
     private final short team_size;
     private final int min_player;
@@ -207,6 +223,7 @@ public class Game {
     private final Location lobby;
     @Getter
     private final List<SignHandler> signs;
+    @Getter
     private final List<Team> teams;
     private final List<Resource> resources;
     @Getter
@@ -221,7 +238,7 @@ public class Game {
     // 游戏信息
     @Getter
     @Setter
-    private GameStatus status = GameStatus.STOP;
+    private GameStatus status = GameStatus.WAITING;
 
     public Game(final String name, final short team_size, final int min_player, final int max_player, final AABB aabb, final Location lobby, final List<SignHandler> signs, final List<Team> teams, final List<Resource> resources, final int wait_time) {
         this.name = name;
@@ -291,13 +308,18 @@ public class Game {
         Bukkit.getScheduler().runTaskTimer(ApexBattle.getInst(), () -> {
             switch (this.status) {
                 case WAITING: {
-                    if (this.gamePlayers.size() >= this.min_player && this.teams.stream().allMatch(t -> t.gamePlayers.size() > 0)) {
+                    if (this.gamePlayers.size() >= this.min_player /*&& this.teams.stream().allMatch(t -> t.gamePlayers.size() > 0)*/) {
                         if (this.isCountingDown) {
                             this.need_time--;
 
                             if (this.need_time < 1) {
                                 this.setStatus(GameStatus.GAMING);
                                 this.isCountingDown = false;
+                                for (GamePlayer gamePlayer : this.gamePlayers) {
+                                    if (gamePlayer.getTeam() == null) {
+                                        gamePlayer.setTeam(this.teams.get(new Random().nextInt(this.teams.size() - 1)));
+                                    }
+                                }
                                 for (Team team : this.teams) {
                                     for (GamePlayer gamePlayer : team.gamePlayers) {
                                         gamePlayer.teleport(team.spawn);
@@ -323,6 +345,11 @@ public class Game {
                     for (Resource resource : this.resources) {
                         if (currentTick % resource.itemHandler.getInterval() == 0) {
                             resource.spawn.getWorld().dropItemNaturally(resource.spawn, resource.itemHandler.createItem());
+                        }
+                    }
+                    for (GamePlayer gamePlayer : this.gamePlayers) {
+                        if (!gamePlayer.isColliding(this.aabb)) {
+                            gamePlayer.damage(DamageSource.OUT_OF_WORLD, 7);
                         }
                     }
                     break;
@@ -367,8 +394,11 @@ public class Game {
     }
 
     public static class Team {
+        @Getter
         private final Location spawn;
+        @Getter
         private final List<GamePlayer> gamePlayers;
+        @Getter
         private final DyeColor color;
         private final String name;
 

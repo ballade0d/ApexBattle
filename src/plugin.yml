@@ -1,0 +1,6 @@
+name: ApexBattle
+main: xyz.hstudio.apexbattle.ApexBattle
+version: '1.0'
+commands:
+  apex:
+    description: Main command

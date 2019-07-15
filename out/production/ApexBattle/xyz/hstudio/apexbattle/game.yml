@@ -1,7 +1,17 @@
+# 模板，无用
+
 name: 'Game'
 team_size: 4
 min_player: 4
 max_player: 32
+region:
+  world:
+  x1:
+  y1:
+  z1:
+  x2:
+  y2:
+  z2:
 lobby:
   world:
   x:
@@ -17,6 +27,7 @@ signs:
     z:
 teams:
   xxx:
+    color: BLUE
     world:
     x:
     y:

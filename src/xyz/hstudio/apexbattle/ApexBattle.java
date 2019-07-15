@@ -13,6 +13,7 @@ import xyz.hstudio.apexbattle.util.Logger;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class ApexBattle extends JavaPlugin {
@@ -29,7 +30,7 @@ public final class ApexBattle extends JavaPlugin {
     }
 
     @Override
-    public void onLoad() {
+    public void onEnable() {
         long startTime = System.currentTimeMillis();
 
         if (!Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].equals("v1_12_R1")) {
@@ -57,6 +58,7 @@ public final class ApexBattle extends JavaPlugin {
         }
         this.config = YamlConfiguration.loadConfiguration(config);
 
+        this.games = new ArrayList<>();
         File gameDic = new File(folder, "game");
         if (!gameDic.exists()) {
             if (!gameDic.mkdirs()) {

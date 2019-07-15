@@ -69,28 +69,24 @@ public class ItemHandler {
         ConfigurationSection section = config.getConfigurationSection("resource");
         for (String id : section.getKeys(false)) {
             if (ItemHandler.checkConfig.test(section.getConfigurationSection(id))) {
-                try {
-                    String name = section.getString("name");
-                    String material = section.getString("material");
-                    boolean ench = section.getBoolean("ench");
-                    List<String> lore = section.getStringList("lore");
-                    long interval = section.getLong("interval");
+                String name = section.getString(id + ".name");
+                String material = section.getString(id + ".material");
+                boolean ench = section.getBoolean(id + ".ench");
+                List<String> lore = section.getStringList(id + ".lore");
+                long interval = section.getLong(id + ".interval");
 
-                    Material mat = Material.getMaterial(material);
-                    if (mat == null) {
-                        Logger.log("在加载资源物品 " + id + " 时出现错误！原因：材质类型错误");
-                        continue;
-                    } else if (mat == Material.AIR) {
-                        Logger.log("在加载资源物品 " + id + " 时出现错误！原因：材质类型不能为空气");
-                        continue;
-                    }
-                    ItemHandler.resource.add(new ItemHandler(id, name, mat, ench, lore, interval));
-                } catch (ClassCastException e) {
-                    Logger.log("在加载资源物品 " + id + " 时出现错误！原因：类型不匹配");
-                    e.printStackTrace();
+                Material mat = Material.getMaterial(material);
+                if (mat == null) {
+                    Logger.log("在加载资源物品 " + id + " 时出现错误！原因：材质类型错误");
+                    continue;
+                } else if (mat == Material.AIR) {
+                    Logger.log("在加载资源物品 " + id + " 时出现错误！原因：材质类型不能为空气");
+                    continue;
                 }
+                ItemHandler.resource.add(new ItemHandler(id, name, mat, ench, lore, interval));
             } else {
                 Logger.log("在加载资源物品 " + id + " 时出现错误！原因：缺少必要节点");
+                continue;
             }
         }
     }
