@@ -1,0 +1,35 @@
+name: 'Game'
+team_size: 4
+min_player: 4
+max_player: 32
+lobby:
+  world:
+  x:
+  y:
+  z:
+  yaw:
+  pitch:
+signs:
+  1:
+    world:
+    x:
+    y:
+    z:
+teams:
+  xxx:
+    world:
+    x:
+    y:
+    z:
+    yaw:
+    pitch:
+resource:
+  1:
+    type:
+    loc:
+      world:
+      x:
+      y:
+      z:
+      yaw:
+      pitch:

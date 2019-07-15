@@ -1,0 +1,46 @@
+# 模板，无用
+
+name: 'Game'
+team_size: 4
+min_player: 4
+max_player: 32
+region:
+  world:
+  x1:
+  y1:
+  z1:
+  x2:
+  y2:
+  z2:
+lobby:
+  world:
+  x:
+  y:
+  z:
+  yaw:
+  pitch:
+signs:
+  1:
+    world:
+    x:
+    y:
+    z:
+teams:
+  xxx:
+    color: BLUE
+    world:
+    x:
+    y:
+    z:
+    yaw:
+    pitch:
+resource:
+  1:
+    type:
+    loc:
+      world:
+      x:
+      y:
+      z:
+      yaw:
+      pitch:
