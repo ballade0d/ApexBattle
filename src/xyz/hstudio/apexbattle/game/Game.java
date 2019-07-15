@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import xyz.hstudio.apexbattle.ApexBattle;
 import xyz.hstudio.apexbattle.game.internal.ItemHandler;
-import xyz.hstudio.apexbattle.util.AABB;
+import xyz.hstudio.apexbattle.util.AxisAlignedBB;
 import xyz.hstudio.apexbattle.util.Logger;
 
 import java.util.ArrayList;
@@ -99,7 +99,7 @@ public class Game {
                     Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：大厅出生地不存在");
                     continue;
                 }
-                AABB aabb;
+                AxisAlignedBB axisAlignedBB;
                 Location lobby = new Location(lobbyWorld, section.getDouble("lobby.x"), section.getDouble("lobby.y"), section.getDouble("lobby.z"), (float) section.getDouble("lobby.yaw"), (float) section.getDouble("lobby.pitch"));
 
                 List<SignHandler> signList = new ArrayList<>();
@@ -122,7 +122,7 @@ public class Game {
                     double x2 = region.getDouble("x2");
                     double y2 = region.getDouble("y2");
                     double z2 = region.getDouble("z2");
-                    aabb = new AABB(x1, y1, z1, x2, y2, z2, world);
+                    axisAlignedBB = new AxisAlignedBB(x1, y1, z1, x2, y2, z2, world);
                 } else {
                     Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：区域设置缺少必要节点");
                     continue;
@@ -205,7 +205,7 @@ public class Game {
                     }
                 }
 
-                Game.games.add(new Game(name, (short) team_size, min_player, max_player, aabb, lobby, signList, teamList, resourceList, conf.getInt("wait_time")));
+                Game.games.add(new Game(name, (short) team_size, min_player, max_player, axisAlignedBB, lobby, signList, teamList, resourceList, conf.getInt("wait_time")));
             } else {
                 Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：缺少必要节点");
             }
@@ -219,7 +219,7 @@ public class Game {
     private final short team_size;
     private final int min_player;
     private final int max_player;
-    private final AABB aabb;
+    private final AxisAlignedBB axisAlignedBB;
     private final Location lobby;
     @Getter
     private final List<SignHandler> signs;
@@ -240,12 +240,12 @@ public class Game {
     @Setter
     private GameStatus status = GameStatus.WAITING;
 
-    public Game(final String name, final short team_size, final int min_player, final int max_player, final AABB aabb, final Location lobby, final List<SignHandler> signs, final List<Team> teams, final List<Resource> resources, final int wait_time) {
+    public Game(final String name, final short team_size, final int min_player, final int max_player, final AxisAlignedBB axisAlignedBB, final Location lobby, final List<SignHandler> signs, final List<Team> teams, final List<Resource> resources, final int wait_time) {
         this.name = name;
         this.team_size = team_size;
         this.min_player = min_player;
         this.max_player = max_player;
-        this.aabb = aabb;
+        this.axisAlignedBB = axisAlignedBB;
         this.lobby = lobby;
         this.signs = signs;
         this.teams = teams;
@@ -348,7 +348,7 @@ public class Game {
                         }
                     }
                     for (GamePlayer gamePlayer : this.gamePlayers) {
-                        if (!gamePlayer.isColliding(this.aabb)) {
+                        if (!gamePlayer.isColliding(this.axisAlignedBB)) {
                             gamePlayer.damage(DamageSource.OUT_OF_WORLD, 7);
                         }
                     }

@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +18,7 @@ import xyz.hstudio.apexbattle.ApexBattle;
 import xyz.hstudio.apexbattle.game.Game;
 import xyz.hstudio.apexbattle.game.GamePlayer;
 import xyz.hstudio.apexbattle.game.internal.ItemHandler;
+import xyz.hstudio.apexbattle.packet.ChannelHandler;
 import xyz.hstudio.apexbattle.util.GameUtil;
 import xyz.hstudio.apexbattle.util.ItemUtil;
 
@@ -24,6 +26,11 @@ public class EventListener implements Listener {
 
     public EventListener() {
         Bukkit.getPluginManager().registerEvents(this, ApexBattle.getInst());
+    }
+
+    @EventHandler
+    public void onPlayerJoin(final PlayerJoinEvent e) {
+        ChannelHandler.register(e.getPlayer());
     }
 
     @EventHandler

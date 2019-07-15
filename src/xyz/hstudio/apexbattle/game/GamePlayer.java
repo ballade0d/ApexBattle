@@ -6,7 +6,7 @@ import net.minecraft.server.v1_12_R1.DamageSource;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import xyz.hstudio.apexbattle.util.AABB;
+import xyz.hstudio.apexbattle.util.AxisAlignedBB;
 
 public class GamePlayer {
 
@@ -35,7 +35,7 @@ public class GamePlayer {
         ((CraftPlayer) this.player).getHandle().damageEntity(damageSource, damage);
     }
 
-    boolean isColliding(final AABB other) {
-        return AABB.playerAABB.clone().translate(this.player.getLocation().toVector()).isColliding(other);
+    boolean isColliding(final AxisAlignedBB other) {
+        return AxisAlignedBB.playerAABB.clone().translate(this.player.getLocation().toVector()).isColliding(other);
     }
 }

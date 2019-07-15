@@ -5,9 +5,9 @@ import lombok.Setter;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
-public class AABB implements Cloneable {
+public class AxisAlignedBB implements Cloneable {
 
-    public static final AABB playerAABB = new AABB(new Vector(-0.3, 0, -0.3), new Vector(0.3, 1.8, 0.3), null);
+    public static final AxisAlignedBB playerAABB = new AxisAlignedBB(new Vector(-0.3, 0, -0.3), new Vector(0.3, 1.8, 0.3), null);
 
     @Getter
     @Setter
@@ -19,17 +19,17 @@ public class AABB implements Cloneable {
     @Setter
     private World world;
 
-    public AABB(final Vector min, final Vector max, final World world) {
+    public AxisAlignedBB(final Vector min, final Vector max, final World world) {
         this.min = min;
         this.max = max;
         this.world = world;
     }
 
-    public AABB(final double minX, final double minY, final double minZ, final double maxX, final double maxY, final double maxZ, final World world) {
+    public AxisAlignedBB(final double minX, final double minY, final double minZ, final double maxX, final double maxY, final double maxZ, final World world) {
         this(new Vector(minX, minY, minZ), new Vector(maxX, maxY, maxZ), world);
     }
 
-    public boolean isColliding(final AABB other) {
+    public boolean isColliding(final AxisAlignedBB other) {
         if (max.getX() < other.getMin().getX() || min.getX() > other.getMax().getX()) {
             return false;
         }
@@ -39,16 +39,16 @@ public class AABB implements Cloneable {
         return !(max.getZ() < other.getMin().getZ()) && !(min.getZ() > other.getMax().getZ());
     }
 
-    public AABB translate(final Vector vector) {
+    public AxisAlignedBB translate(final Vector vector) {
         min.add(vector);
         max.add(vector);
         return this;
     }
 
-    public AABB clone() {
-        AABB clone;
+    public AxisAlignedBB clone() {
+        AxisAlignedBB clone;
         try {
-            clone = (AABB) super.clone();
+            clone = (AxisAlignedBB) super.clone();
             clone.min = this.min.clone();
             clone.max = this.max.clone();
             return clone;

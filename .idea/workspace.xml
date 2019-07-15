@@ -7,15 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbee312d-075f-4e84-bb3c-6e368c3e82ab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/plugin.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/ChannelHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/GamePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/GamePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/internal/ItemHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/internal/ItemHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AABB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AABB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AABB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AxisAlignedBB.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -69,7 +66,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/Logger.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/EventListener.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/ChannelHandler.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/Predication.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/ItemHandler.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/internal/Resource.java" />
@@ -85,11 +81,12 @@
         <option value="$PROJECT_DIR$/src/plugin.yml" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/internal/ItemHandler.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AABB.java" />
         <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/GamePlayer.java" />
+        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" />
+        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/ChannelHandler.java" />
       </list>
     </option>
   </component>
@@ -111,7 +108,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -130,39 +126,11 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-              <item name="internal" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="listener" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -216,6 +184,7 @@
       <workItem from="1563171364657" duration="6176000" />
       <workItem from="1563188086076" duration="1074000" />
       <workItem from="1563203104825" duration="4837000" />
+      <workItem from="1563207967718" duration="1496000" />
     </task>
     <task id="LOCAL-00001" summary="完成60%">
       <created>1563187875280</created>
@@ -231,16 +200,23 @@
       <option name="project" value="LOCAL" />
       <updated>1563188178637</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="70% 修复+完善">
+      <created>1563207993778</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1563207993779</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32769000" />
+    <option name="totallyTimeSpent" value="34265000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49860334" visible="true" weight="0.23925501" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49860334" visible="true" weight="0.24283667" />
       <window_info id="Structure" order="1" sideWeight="0.50139666" side_tool="true" weight="0.26432666" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -279,7 +255,8 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="完成60%" />
     <MESSAGE value="60%" />
-    <option name="LAST_COMMIT_MESSAGE" value="60%" />
+    <MESSAGE value="70% 修复+完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="70% 修复+完善" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/ChannelHandler.java" />
@@ -290,7 +267,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/ChannelHandler.java" />
     <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/entity/Entity.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="249">
@@ -493,16 +469,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="791">
-          <caret line="98" column="16" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-359">
@@ -513,7 +479,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AABB.java">
+    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AxisAlignedBB.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1334">
           <caret line="58" column="5" selection-start-line="58" selection-start-column="5" selection-end-line="58" selection-end-column="5" />
@@ -543,6 +509,28 @@
             <element signature="e#17874#17875#0" expanded="true" />
             <element signature="e#17940#17941#0" expanded="true" />
             <element signature="e#17999#18000#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1180#1181#0" expanded="true" />
+            <element signature="e#1234#1235#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/ChannelHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1067">
+          <caret line="73" column="9" lean-forward="true" selection-start-line="73" selection-start-column="9" selection-end-line="73" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
