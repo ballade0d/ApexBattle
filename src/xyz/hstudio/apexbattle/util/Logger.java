@@ -5,9 +5,9 @@ import org.bukkit.command.ConsoleCommandSender;
 
 public class Logger {
 
-    private static final ConsoleCommandSender SENDER = Bukkit.getConsoleSender();
+    private static final ConsoleCommandSender sender = Bukkit.getConsoleSender();
 
-    public static void log(final String msg) {
-        Logger.SENDER.sendMessage("(APEX/INFO) " + msg);
+    public static void info(final String msg) {
+        sender.sendMessage("[APEX|INFO] " + msg);
     }
 }

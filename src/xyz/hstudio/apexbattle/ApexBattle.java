@@ -3,86 +3,112 @@ package xyz.hstudio.apexbattle;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.hstudio.apexbattle.config.MessageManager;
+import xyz.hstudio.apexbattle.config.YamlConfig;
 import xyz.hstudio.apexbattle.game.Game;
-import xyz.hstudio.apexbattle.game.internal.ItemHandler;
+import xyz.hstudio.apexbattle.game.Resource;
+import xyz.hstudio.apexbattle.game.Sign;
+import xyz.hstudio.apexbattle.game.Team;
 import xyz.hstudio.apexbattle.listener.EventListener;
+import xyz.hstudio.apexbattle.util.AxisAlignedBB;
 import xyz.hstudio.apexbattle.util.Logger;
+import xyz.hstudio.apexbattle.util.NmsUtil;
 
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
-public final class ApexBattle extends JavaPlugin {
+public class ApexBattle extends JavaPlugin {
 
     @Getter
-    private static ApexBattle inst;
+    private static ApexBattle instance;
+
     @Getter
     private FileConfiguration config;
     @Getter
-    private List<FileConfiguration> games;
+    private FileConfiguration message;
+    @Getter
+    private MessageManager messageManager;
 
     public ApexBattle() {
-        inst = this;
+        instance = this;
     }
 
     @Override
     public void onEnable() {
-        long startTime = System.currentTimeMillis();
-
-        if (!Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].equals("v1_12_R1")) {
-            Logger.log("ApexBattle不支持该版本，请使用1.12.2！");
+        // 判断版本
+        NmsUtil.init();
+        if (NmsUtil.getInstance() == null) {
+            Logger.info("ApexBattle不支持该版本！");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        File folder = this.getDataFolder();
-        if (!folder.exists()) {
-            if (!folder.mkdir()) {
-                Logger.log("创建配置文件夹失败！");
-                Bukkit.getPluginManager().disablePlugin(this);
-                return;
-            }
+
+        if (!getDataFolder().exists() && !getDataFolder().mkdirs()) {
+            Logger.info("创建插件文件夹失败！");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
         }
-        File config = new File(folder, "config.yml");
-        if (!config.exists()) {
+
+        File gameDir = new File(getDataFolder(), "game");
+        if (!gameDir.exists() && !gameDir.mkdirs()) {
+            Logger.info("创建游戏文件夹失败！");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        File mapDir = new File(getDataFolder(), "map");
+        if (!mapDir.exists() && !mapDir.mkdirs()) {
+            Logger.info("创建地图文件夹失败！");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        // 注册可序列化的类
+        ConfigurationSerialization.registerClass(Resource.class, "Resource");
+        ConfigurationSerialization.registerClass(Sign.class, "Sign");
+        ConfigurationSerialization.registerClass(Team.class, "Team");
+        ConfigurationSerialization.registerClass(AxisAlignedBB.class, "AxisAlignedBB");
+
+        // 加载config.yml
+        File configFile = new File(getDataFolder(), "config.yml");
+        if (!configFile.exists()) {
             try (InputStream in = getResource("xyz/hstudio/apexbattle/config.yml")) {
-                Files.copy(in, config.toPath());
+                Files.copy(in, configFile.toPath());
             } catch (Exception e) {
                 e.printStackTrace();
-                Bukkit.getPluginManager().disablePlugin(this);
-                return;
+                Logger.info("创建配置文件失败！");
             }
         }
-        this.config = YamlConfiguration.loadConfiguration(config);
+        this.config = YamlConfig.loadConfiguration(configFile);
 
-        this.games = new ArrayList<>();
-        File gameDic = new File(folder, "game");
-        if (!gameDic.exists()) {
-            if (!gameDic.mkdirs()) {
-                Logger.log("创建游戏文件夹失败！");
-                Bukkit.getPluginManager().disablePlugin(this);
-                return;
+        // 加载message.yml
+        File messageFile = new File(getDataFolder(), "message.yml");
+        if (!messageFile.exists()) {
+            try (InputStream in = getResource("xyz/hstudio/apexbattle/message.yml")) {
+                Files.copy(in, messageFile.toPath());
+            } catch (Exception e) {
+                e.printStackTrace();
+                Logger.info("创建语言文件失败！");
             }
         }
-        File[] gameFiles = gameDic.listFiles();
-        if (gameFiles != null) {
-            for (File game : gameFiles) {
-                this.games.add(YamlConfiguration.loadConfiguration(game));
-            }
-        }
+        this.message = YamlConfig.loadConfiguration(messageFile);
 
-        ItemHandler.load();
-        Game.load();
-
-        // 注册监听器
+        this.messageManager = new MessageManager();
+        new ApexCommand();
         new EventListener();
-        Bukkit.getPluginCommand("apex").setExecutor(new ApexCommand());
 
-        long finishTime = System.currentTimeMillis();
-        Logger.log("ApexBattle(" + this.getDescription().getVersion() + ") 已载入.");
-        Logger.log("共耗时 " + ((finishTime - startTime) / 1000D) + " 秒");
+        File[] games = gameDir.listFiles();
+        if (games != null) {
+            Arrays.stream(games).forEach(Game::new);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        Game.getGames().forEach(Game::disable);
     }
 }

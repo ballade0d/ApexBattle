@@ -1,338 +1,310 @@
 package xyz.hstudio.apexbattle;
 
-import org.bukkit.DyeColor;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import xyz.hstudio.apexbattle.annotation.Cmd;
+import xyz.hstudio.apexbattle.config.MessageManager;
 import xyz.hstudio.apexbattle.game.Game;
-import xyz.hstudio.apexbattle.game.internal.ItemHandler;
+import xyz.hstudio.apexbattle.game.Resource;
+import xyz.hstudio.apexbattle.game.Team;
+import xyz.hstudio.apexbattle.util.AxisAlignedBB;
+import xyz.hstudio.apexbattle.util.FileUtil;
 import xyz.hstudio.apexbattle.util.GameUtil;
-import xyz.hstudio.apexbattle.util.NumberUtil;
+import xyz.hstudio.apexbattle.util.WorldUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Set;
+import java.lang.reflect.Method;
+import java.util.*;
 
 public class ApexCommand implements CommandExecutor {
 
+    private static final Map<String, Map.Entry<Cmd, Method>> commandMap = new HashMap<>();
+    private static ApexCommand instance;
+
+    ApexCommand() {
+        Cmd annotation;
+        for (Method method : this.getClass().getDeclaredMethods()) {
+            // 获取方法的注解
+            annotation = method.getAnnotation(Cmd.class);
+            if (annotation == null) {
+                continue;
+            }
+            // 使方法可以被访问
+            method.setAccessible(true);
+            // 获取指令名
+            String name = annotation.name();
+            // 注册
+            commandMap.put(name, new AbstractMap.SimpleEntry<>(annotation, method));
+        }
+        instance = this;
+        Bukkit.getPluginCommand("apex").setExecutor(this);
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0) {
-            sender.sendMessage("§6§lApexBattle §7§l>> §r§eApexBattle 1.0 by MrCraftGoo");
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(cmd.getName()).append(" ");
+        for (String arg : args) {
+            sb.append(arg).append(" ");
+        }
+        onCommand(sender, sb.toString().trim());
+        return true;
+    }
+
+    private void onCommand(final CommandSender sender, final String cmd) {
+        MessageManager manager = ApexBattle.getInstance().getMessageManager();
+        if (cmd.equalsIgnoreCase("apex")) {
+            sender.sendMessage(manager.prefix + "ApexBattle by MrCraftGoo");
+            return;
+        }
+        String[] args = cmd.split(" ");
+        String main = args[0];
+        // 是插件的指令
+        if (main.equalsIgnoreCase("apex")) {
+            // 获取第一个参数
+            String first = args[1];
+            // 判断是否有该指令
+            if (!commandMap.containsKey(first)) {
+                sender.sendMessage(manager.prefix + manager.no_command_found);
+                return;
+            }
+            // 获取第一个参数对应的指令
+            Map.Entry<Cmd, Method> info = commandMap.get(first);
+            Cmd annotation = info.getKey();
+            Method method = info.getValue();
+
+            // 判断命令是否只能由玩家执行
+            if (annotation.onlyPlayer() && !(sender instanceof Player)) {
+                sender.sendMessage(manager.prefix + manager.command_only_player);
+                return;
+            }
+            // 判断权限
+            if (!sender.hasPermission(annotation.perm())) {
+                sender.sendMessage(manager.prefix + manager.no_permission);
+                return;
+            }
+            // 判断参数是否正确
+            String availableArgs = annotation.availableArgs();
+            if ((args.length - 2 == 0 && !availableArgs.contains(" ")) || args.length - 2 != availableArgs.split(" ").length) {
+                sender.sendMessage(manager.prefix + manager.command_wrong
+                        .replace("%first%", first)
+                        .replace("%args%", availableArgs));
+                return;
+            }
+            List<String> argList = new ArrayList<>(Arrays.asList(args));
+            // 移除前两项
+            argList.subList(0, 2).clear();
+            try {
+                // 执行指令
+                if (!(boolean) method.invoke(instance, manager, sender, argList.toArray(new String[]{}))) {
+                    sender.sendMessage(manager.prefix + manager.command_wrong
+                            .replace("%first%", first)
+                            .replace("%args%", availableArgs));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Cmd(
+            name = "create",
+            perm = "apex.command.create",
+            availableArgs = "<游戏名>"
+    )
+    private boolean create(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        // 判断游戏存在性
+        if (FileUtil.isGameExist(name)) {
+            sender.sendMessage(manager.prefix + manager.game_already_exist);
             return true;
         }
-        if (sender.isOp()) {
-            switch (args[0].toLowerCase()) {
-                case "create": {
-                    if (args.length == 5) {
-                        File file = new File(ApexBattle.getInst().getDataFolder(), "game/" + args[1] + ".yml");
-                        if (file.exists()) {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e游戏已存在！");
-                            return true;
-                        }
-                        if (!NumberUtil.isInt(args[2]) || !NumberUtil.isInt(args[3]) || !NumberUtil.isInt(args[4])) {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e参数错误！");
-                            return true;
-                        }
-                        try {
-                            file.createNewFile();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e创建游戏失败！");
-                            return true;
-                        }
-                        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                        config.set("name", args[1]);
-                        config.set("team_size", Integer.parseInt(args[2]));
-                        config.set("min_player", Integer.parseInt(args[3]));
-                        config.set("max_player", Integer.parseInt(args[4]));
-                        try {
-                            config.save(file);
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e创建成功！");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e创建游戏失败！");
-                            return true;
-                        }
-                    } else {
-                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
-                        return true;
-                    }
-                    break;
-                }
-                case "setlobby": {
-                    if (sender instanceof Player) {
-                        Player p = (Player) sender;
-                        if (args.length == 2) {
-                            File file = new File(ApexBattle.getInst().getDataFolder(), "game/" + args[1] + ".yml");
-                            if (!file.exists()) {
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e游戏不存在！");
-                                return true;
-                            }
-                            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                            String world = p.getWorld().getName();
-                            double x = p.getLocation().getX();
-                            double y = p.getLocation().getY();
-                            double z = p.getLocation().getZ();
-                            float yaw = p.getLocation().getYaw();
-                            float pitch = p.getLocation().getPitch();
-                            config.set("lobby.world", world);
-                            config.set("lobby.x", x);
-                            config.set("lobby.y", y);
-                            config.set("lobby.z", z);
-                            config.set("lobby.yaw", yaw);
-                            config.set("lobby.pitch", pitch);
-                            try {
-                                config.save(file);
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置成功！");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
-                                return true;
-                            }
-                        } else {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
-                            return true;
-                        }
-                    } else {
-                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e该指令只能由玩家执行！");
-                        return true;
-                    }
-                    break;
-                }
-                case "addteam": {
-                    if (args.length == 4) {
-                        File file = new File(ApexBattle.getInst().getDataFolder(), "game/" + args[1] + ".yml");
-                        if (!file.exists()) {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e游戏不存在！");
-                            return true;
-                        }
-                        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                        if (config.contains("teams." + args[3])) {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e队伍已存在！");
-                            return true;
-                        }
-                        if (Arrays.stream(DyeColor.values()).noneMatch(v -> v.name().equals(args[2]))) {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e颜色错误！");
-                            return true;
-                        }
-                        config.set("teams." + args[3] + ".color", args[2]);
-                        try {
-                            config.save(file);
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e队伍创建成功！");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
-                            return true;
-                        }
-                    } else {
-                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
-                        return true;
-                    }
-                    break;
-                }
-                case "setspawn": {
-                    if (sender instanceof Player) {
-                        if (args.length == 3) {
-                            File file = new File(ApexBattle.getInst().getDataFolder(), "game/" + args[1] + ".yml");
-                            if (!file.exists()) {
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e游戏不存在！");
-                                return true;
-                            }
-                            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                            if (!config.contains("teams." + args[2])) {
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e队伍不存在！");
-                                return true;
-                            }
-                            Player p = (Player) sender;
-                            String world = p.getWorld().getName();
-                            double x = p.getLocation().getX();
-                            double y = p.getLocation().getY();
-                            double z = p.getLocation().getZ();
-                            float yaw = p.getLocation().getYaw();
-                            float pitch = p.getLocation().getPitch();
-                            config.set("teams." + args[2] + ".world", world);
-                            config.set("teams." + args[2] + ".x", x);
-                            config.set("teams." + args[2] + ".y", y);
-                            config.set("teams." + args[2] + ".z", z);
-                            config.set("teams." + args[2] + ".yaw", yaw);
-                            config.set("teams." + args[2] + ".pitch", pitch);
-                            try {
-                                config.save(file);
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e队伍设置成功！");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
-                                return true;
-                            }
-                        } else {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
-                            return true;
-                        }
-                    } else {
-                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e该指令只能由玩家执行！");
-                        return true;
-                    }
-                    break;
-                }
-                case "addresource": {
-                    if (sender instanceof Player) {
-                        if (args.length == 3) {
-                            File file = new File(ApexBattle.getInst().getDataFolder(), "game/" + args[1] + ".yml");
-                            if (!file.exists()) {
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e游戏不存在！");
-                                return true;
-                            }
-                            if (ItemHandler.resource.stream().noneMatch(res -> res.getId().equalsIgnoreCase(args[2]))) {
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e该资源类型不存在！");
-                                return true;
-                            }
-                            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                            int max = -1;
-                            if (config.isSet("resource")) {
-                                Set<String> sections = config.getConfigurationSection("resource").getKeys(false);
-                                for (String section : sections) {
-                                    if (NumberUtil.isInt(section) && Integer.parseInt(section) > max) {
-                                        max = Integer.parseInt(section);
-                                    }
-                                }
-                                max++;
-                            } else {
-                                max = 1;
-                            }
-                            Player p = (Player) sender;
-                            String world = p.getWorld().getName();
-                            double x = p.getLocation().getX();
-                            double y = p.getLocation().getY();
-                            double z = p.getLocation().getZ();
-                            float yaw = p.getLocation().getYaw();
-                            float pitch = p.getLocation().getPitch();
-                            config.set("resource." + max + ".type", args[2]);
-                            config.set("resource." + max + ".world", world);
-                            config.set("resource." + max + ".x", x);
-                            config.set("resource." + max + ".y", y);
-                            config.set("resource." + max + ".z", z);
-                            config.set("resource." + max + ".yaw", yaw);
-                            config.set("resource." + max + ".pitch", pitch);
-                            try {
-                                config.save(file);
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e资源点添加成功！");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
-                                return true;
-                            }
-                        } else {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
-                            return true;
-                        }
-                    } else {
-                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e该指令只能由玩家执行！");
-                        return true;
-                    }
-                    break;
-                }
-                case "setregion": {
-                    if (sender instanceof Player) {
-                        if (args.length == 3) {
-                            File file = new File(ApexBattle.getInst().getDataFolder(), "game/" + args[1] + ".yml");
-                            if (!file.exists()) {
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e游戏不存在！");
-                                return true;
-                            }
-                            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                            Player p = (Player) sender;
-                            if (args[2].equalsIgnoreCase("min")) {
-                                if (config.contains("region.world")) {
-                                    if (!p.getWorld().getName().equalsIgnoreCase(config.getString("region.world"))) {
-                                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e游戏区域不在一个世界！");
-                                        return true;
-                                    }
-                                }
-                                config.set("region.world", p.getWorld().getName());
-                                config.set("region.x1", p.getLocation().getX());
-                                config.set("region.y1", p.getLocation().getY());
-                                config.set("region.z1", p.getLocation().getZ());
-                                try {
-                                    config.save(file);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
-                                    return true;
-                                }
-                            } else if (args[2].equalsIgnoreCase("max")) {
-                                if (config.contains("region.world")) {
-                                    if (!p.getWorld().getName().equalsIgnoreCase(config.getString("region.world"))) {
-                                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e游戏区域不在一个世界！");
-                                        return true;
-                                    }
-                                }
-                                config.set("region.world", p.getWorld().getName());
-                                config.set("region.x2", p.getLocation().getX());
-                                config.set("region.y2", p.getLocation().getY());
-                                config.set("region.z2", p.getLocation().getZ());
-                                try {
-                                    config.save(file);
-                                    sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置成功！");
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    sender.sendMessage("§6§lApexBattle §7§l>> §r§e设置失败！");
-                                    return true;
-                                }
-                            } else {
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
-                                return true;
-                            }
-                        }
-                    } else {
-                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e该指令只能由玩家执行！");
-                        return true;
-                    }
-                    break;
-                }
-                default: {
-                    sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
-                    return true;
-                }
-            }
+        // 创建游戏
+        if (FileUtil.createGame(name)) {
+            sender.sendMessage(manager.prefix + manager.create_successfully);
         } else {
-            switch (args[0]) {
-                case "join": {
-                    if (sender instanceof Player) {
-                        if (args.length == 2) {
-                            Player p = (Player) sender;
-                            Game game = GameUtil.getPlayingGame(p);
-                            if (game != null) {
-                                sender.sendMessage("§6§lApexBattle §7§l>> §r§e你已经在游戏中了！");
-                                return true;
-                            }
-                            for (Game join : Game.getGames()) {
-                                if (join.getName().equals(args[1])) {
-                                    if (join.getStatus() == Game.GameStatus.WAITING) {
-                                        join.onJoin(p);
-                                    } else {
-                                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e现在无法加入该游戏！");
-                                        return true;
-                                    }
-                                    break;
-                                }
-                            }
-                        } else {
-                            sender.sendMessage("§6§lApexBattle §7§l>> §r§e指令错误！");
-                            return true;
-                        }
-                    } else {
-                        sender.sendMessage("§6§lApexBattle §7§l>> §r§e该指令只能由玩家执行！");
-                        return true;
-                    }
-                    break;
-                }
-            }
+            sender.sendMessage(manager.prefix + manager.create_fail);
         }
+        return true;
+    }
+
+    @Cmd(
+            name = "setregion",
+            onlyPlayer = true,
+            perm = "apex.command.setregion",
+            availableArgs = "<游戏名> <min/max>"
+    )
+    private boolean setRegion(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        // 判断游戏存在性
+        Game game = GameUtil.getGame(name);
+        if (game == null) {
+            sender.sendMessage(manager.prefix + manager.game_does_not_exist);
+            return true;
+        }
+        Player p = (Player) sender;
+        AxisAlignedBB axisAlignedBB = game.getRegion() == null ? new AxisAlignedBB() : game.getRegion();
+        // 设置区域
+        if (args[1].equalsIgnoreCase("min")) {
+            axisAlignedBB.setMin(p.getLocation().toVector());
+            axisAlignedBB.setWorld(p.getWorld());
+            game.setRegion(axisAlignedBB);
+            sender.sendMessage(manager.prefix + manager.set_region_successfully);
+        } else if (args[1].equalsIgnoreCase("max")) {
+            axisAlignedBB.setMax(p.getLocation().toVector());
+            axisAlignedBB.setWorld(p.getWorld());
+            game.setRegion(axisAlignedBB);
+            sender.sendMessage(manager.prefix + manager.set_region_successfully);
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    @Cmd(
+            name = "setlobby",
+            onlyPlayer = true,
+            perm = "apex.command.setlobby",
+            availableArgs = "<游戏名>"
+    )
+    private boolean setLobby(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        // 判断游戏存在性
+        Game game = GameUtil.getGame(name);
+        if (game == null) {
+            sender.sendMessage(manager.prefix + manager.game_does_not_exist);
+            return true;
+        }
+        Player p = (Player) sender;
+        // 设置大厅
+        game.setLobby(p.getLocation());
+        sender.sendMessage(manager.prefix + manager.lobby_set_successfully);
+        return true;
+    }
+
+    @Cmd(
+            name = "addresource",
+            onlyPlayer = true,
+            perm = "apex.command.addresource",
+            availableArgs = "<游戏名> <种类>"
+    )
+    private boolean addResource(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        // 判断游戏存在性
+        Game game = GameUtil.getGame(name);
+        if (game == null) {
+            sender.sendMessage(manager.prefix + manager.game_does_not_exist);
+            return true;
+        }
+        Player p = (Player) sender;
+        // 添加资源点
+        game.setResources(game.getResources() == null ? new ArrayList<>() : game.getResources());
+        game.getResources().add(new Resource(args[1], p.getLocation()));
+        sender.sendMessage(manager.prefix + manager.resource_add_successfully);
+        return true;
+    }
+
+    @Cmd(
+            name = "addteam",
+            onlyPlayer = true,
+            perm = "apex.command.addteam",
+            availableArgs = "<游戏名> <队名> <颜色>"
+    )
+    private boolean addTeam(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        // 判断游戏存在性
+        Game game = GameUtil.getGame(name);
+        if (game == null) {
+            sender.sendMessage(manager.prefix + manager.game_does_not_exist);
+            return true;
+        }
+        Player p = (Player) sender;
+        // 添加队伍
+        game.setTeams(game.getTeams() == null ? new ArrayList<>() : game.getTeams());
+        game.getTeams().add(new Team(args[1], args[2], p.getLocation()));
+        sender.sendMessage(manager.prefix + manager.team_add_successfully);
+        return true;
+    }
+
+    @Cmd(
+            name = "save",
+            perm = "apex.command.save",
+            availableArgs = "<游戏名>"
+    )
+    private boolean save(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        // 判断游戏存在性
+        Game game = GameUtil.getGame(name);
+        if (game == null) {
+            sender.sendMessage(manager.prefix + manager.game_does_not_exist);
+            return true;
+        }
+        File gameFile = new File(ApexBattle.getInstance().getDataFolder(), "game/" + name + ".yml");
+        // 保存游戏信息
+        if (!game.saveToFile(gameFile)) {
+            sender.sendMessage(manager.prefix + manager.save_fail);
+        }
+        World world = game.getRegion() == null ? null : game.getRegion().getWorld();
+        if (world == null) {
+            sender.sendMessage(manager.prefix + manager.save_fail);
+            return true;
+        }
+        // 保存地图
+        if (!WorldUtil.saveWorld(world, game.getName())) {
+            sender.sendMessage(manager.prefix + manager.save_fail);
+            return true;
+        }
+        sender.sendMessage(manager.prefix + manager.save_successfully);
+        return true;
+    }
+
+    @Cmd(
+            name = "join",
+            onlyPlayer = true,
+            perm = "apex.command.use",
+            availableArgs = "<游戏名>"
+    )
+    private boolean join(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        Player p = (Player) sender;
+        // 判断是否已经加入游戏了
+        Game playing = GameUtil.getGamePlaying(p);
+        if (playing != null) {
+            sender.sendMessage(manager.prefix + manager.already_in_game);
+            return true;
+        }
+        // 判断游戏存在性
+        Game game = GameUtil.getGame(name);
+        if (game == null) {
+            sender.sendMessage(manager.prefix + manager.game_does_not_exist);
+            return true;
+        }
+        // 加入游戏
+        game.addPlayer(p);
+        return true;
+    }
+
+    @Cmd(
+            name = "leave",
+            onlyPlayer = true,
+            perm = "apex.command.use",
+            availableArgs = "<游戏名>"
+    )
+    private boolean leave(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        Player p = (Player) sender;
+        // 判断是否在游戏中
+        Game playing = GameUtil.getGamePlaying(p);
+        if (playing == null) {
+            sender.sendMessage(manager.prefix + manager.not_in_game);
+            return true;
+        }
+        // 退出游戏
+        playing.removePlayer(p);
         return true;
     }
 }

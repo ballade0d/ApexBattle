@@ -1,437 +1,235 @@
 package xyz.hstudio.apexbattle.game;
 
+import com.boydti.fawe.bukkit.wrapper.AsyncWorld;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import net.minecraft.server.v1_12_R1.DamageSource;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Firework;
+import org.bukkit.entity.Guardian;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import xyz.hstudio.apexbattle.ApexBattle;
-import xyz.hstudio.apexbattle.game.internal.ItemHandler;
+import xyz.hstudio.apexbattle.annotation.LoadFromConfig;
+import xyz.hstudio.apexbattle.config.ConfigLoader;
+import xyz.hstudio.apexbattle.config.YamlConfig;
 import xyz.hstudio.apexbattle.util.AxisAlignedBB;
-import xyz.hstudio.apexbattle.util.Logger;
+import xyz.hstudio.apexbattle.util.WorldUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Predicate;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public class Game {
 
     @Getter
     private static final List<Game> games = new ArrayList<>();
-    private static final Predicate<ConfigurationSection> checkConfig;
-    private static final Predicate<ConfigurationSection> checkRegion;
-    private static final Predicate<ConfigurationSection> checkSign;
-    private static final Predicate<ConfigurationSection> checkTeam;
-    private static final Predicate<ConfigurationSection> checkResource;
 
-    private static List<String> waiting;
-    private static List<String> gaming;
-    private static List<String> stop;
-
-    static {
-        checkConfig = section ->
-                section.contains("name") &&
-                        section.contains("team_size") &&
-                        section.contains("min_player") &&
-                        section.contains("max_player") &&
-                        section.contains("lobby.world") &&
-                        section.contains("lobby.x") &&
-                        section.contains("lobby.y") &&
-                        section.contains("lobby.z") &&
-                        section.contains("lobby.yaw") &&
-                        section.contains("lobby.pitch");
-        checkRegion = section ->
-                section.contains("world") &&
-                        section.contains("x1") &&
-                        section.contains("y1") &&
-                        section.contains("z1") &&
-                        section.contains("x2") &&
-                        section.contains("y2") &&
-                        section.contains("z2");
-        checkSign = section ->
-                section.contains("world") &&
-                        section.contains("x") &&
-                        section.contains("y") &&
-                        section.contains("z");
-        checkTeam = section ->
-                section.contains("color") &&
-                        section.contains("world") &&
-                        section.contains("x") &&
-                        section.contains("y") &&
-                        section.contains("z") &&
-                        section.contains("yaw") &&
-                        section.contains("pitch");
-        checkResource = section ->
-                section.contains("type") &&
-                        section.contains("world") &&
-                        section.contains("x") &&
-                        section.contains("y") &&
-                        section.contains("z") &&
-                        section.contains("yaw") &&
-                        section.contains("pitch");
-    }
-
-    public static void load() {
-        FileConfiguration conf = ApexBattle.getInst().getConfig();
-        waiting = conf.getStringList("sign.waiting");
-        gaming = conf.getStringList("sign.gaming");
-        stop = conf.getStringList("sign.stop");
-        for (FileConfiguration config : ApexBattle.getInst().getGames()) {
-            ConfigurationSection section = config.getConfigurationSection("");
-            if (section == null) {
-                continue;
-            }
-            if (checkConfig.test(section)) {
-                String name = section.getString("name");
-                int team_size = section.getInt("team_size");
-                int min_player = section.getInt("min_player");
-                int max_player = section.getInt("max_player");
-                World lobbyWorld = Bukkit.getWorld(section.getString("lobby.world"));
-                if (lobbyWorld == null) {
-                    Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：大厅出生地不存在");
-                    continue;
-                }
-                AxisAlignedBB axisAlignedBB;
-                Location lobby = new Location(lobbyWorld, section.getDouble("lobby.x"), section.getDouble("lobby.y"), section.getDouble("lobby.z"), (float) section.getDouble("lobby.yaw"), (float) section.getDouble("lobby.pitch"));
-
-                List<SignHandler> signList = new ArrayList<>();
-                List<Team> teamList = new ArrayList<>();
-                List<Resource> resourceList = new ArrayList<>();
-
-                ConfigurationSection region = section.getConfigurationSection("region");
-                if (region == null) {
-                    continue;
-                }
-                if (checkRegion.test(region)) {
-                    World world = Bukkit.getWorld(region.getString("world"));
-                    if (world == null) {
-                        Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：游戏世界不存在");
-                        continue;
-                    }
-                    double x1 = region.getDouble("x1");
-                    double y1 = region.getDouble("y1");
-                    double z1 = region.getDouble("z1");
-                    double x2 = region.getDouble("x2");
-                    double y2 = region.getDouble("y2");
-                    double z2 = region.getDouble("z2");
-                    axisAlignedBB = new AxisAlignedBB(x1, y1, z1, x2, y2, z2, world);
-                } else {
-                    Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：区域设置缺少必要节点");
-                    continue;
-                }
-
-                ConfigurationSection signs = section.getConfigurationSection("signs");
-                if (signs != null) {
-                    for (String sign : signs.getKeys(false)) {
-                        ConfigurationSection signSection = signs.getConfigurationSection(sign);
-                        if (checkSign.test(signSection)) {
-                            World world = Bukkit.getWorld(signSection.getString("world"));
-                            if (world == null) {
-                                continue;
-                            }
-                            double x = signSection.getDouble("x");
-                            double y = signSection.getDouble("y");
-                            double z = signSection.getDouble("z");
-
-                            signList.add(new SignHandler(world, x, y, z));
-                        }
-                    }
-                }
-
-                ConfigurationSection teams = section.getConfigurationSection("teams");
-                if (teams == null) {
-                    continue;
-                }
-                for (String team : teams.getKeys(false)) {
-                    ConfigurationSection teamSection = teams.getConfigurationSection(team);
-                    if (checkTeam.test(teamSection)) {
-                        if (Arrays.stream(DyeColor.values()).noneMatch(v -> v.name().equals(teamSection.getString("color")))) {
-                            Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：队伍 " + team + " 的颜色错误");
-                            continue;
-                        }
-                        DyeColor dyeColor = DyeColor.valueOf(teamSection.getString("color"));
-                        World world = Bukkit.getWorld(teamSection.getString("world"));
-                        if (world == null) {
-                            Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：队伍 " + team + " 的出生点不存在");
-                            continue;
-                        }
-                        double x = teamSection.getDouble("x");
-                        double y = teamSection.getDouble("y");
-                        double z = teamSection.getDouble("z");
-                        float yaw = (float) teamSection.getDouble("yaw");
-                        float pitch = (float) teamSection.getDouble("pitch");
-                        teamList.add(new Team(dyeColor, team, world, x, y, z, yaw, pitch));
-                    } else {
-                        Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：队伍 " + team + " 缺少必要节点");
-                        continue;
-                    }
-                }
-
-                ConfigurationSection resources = section.getConfigurationSection("resource");
-                if (resources == null) {
-                    continue;
-                }
-                for (String resource : resources.getKeys(false)) {
-                    ConfigurationSection resourceSection = resources.getConfigurationSection(resource);
-                    if (checkResource.test(resourceSection)) {
-                        String type = resourceSection.getString("type");
-                        if (ItemHandler.resource.stream().noneMatch(res -> res.getId().equalsIgnoreCase(type))) {
-                            Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：资源类型不存在");
-                            continue;
-                        }
-                        World world = Bukkit.getWorld(resourceSection.getString("world"));
-                        if (world == null) {
-                            Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：资源 " + resource + " 的出生点不存在");
-                            continue;
-                        }
-                        ItemHandler itemHandler = ItemHandler.resource.stream().filter(res -> res.getId().equals(type)).findFirst().get();
-                        double x = resourceSection.getDouble("x");
-                        double y = resourceSection.getDouble("y");
-                        double z = resourceSection.getDouble("z");
-                        float yaw = (float) resourceSection.getDouble("yaw");
-                        float pitch = (float) resourceSection.getDouble("pitch");
-                        resourceList.add(new Resource(itemHandler, world, x, y, z, yaw, pitch));
-                    } else {
-                        Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：资源点配置缺少必要节点");
-                        continue;
-                    }
-                }
-
-                Game.games.add(new Game(name, (short) team_size, min_player, max_player, axisAlignedBB, lobby, signList, teamList, resourceList, conf.getInt("wait_time")));
-            } else {
-                Logger.log("在加载地图 " + config.getName() + " 时出现错误！原因：缺少必要节点");
-            }
-        }
-        Logger.log("已加载 " + Game.games.size() + " 个地图！");
-    }
-
-    // 游戏基本信息
-    @Getter
-    private final String name;
-    private final short team_size;
-    private final int min_player;
-    private final int max_player;
-    private final AxisAlignedBB axisAlignedBB;
-    private final Location lobby;
-    @Getter
-    private final List<SignHandler> signs;
-    @Getter
-    private final List<Team> teams;
-    private final List<Resource> resources;
-    @Getter
-    private final List<GamePlayer> gamePlayers;
-    private final int wait_time;
-
-    private int need_time;
-    private boolean isCountingDown;
-
-    private long currentTick;
-
-    // 游戏信息
+    @LoadFromConfig(path = "name")
     @Getter
     @Setter
-    private GameStatus status = GameStatus.WAITING;
+    private String name;
 
-    public Game(final String name, final short team_size, final int min_player, final int max_player, final AxisAlignedBB axisAlignedBB, final Location lobby, final List<SignHandler> signs, final List<Team> teams, final List<Resource> resources, final int wait_time) {
-        this.name = name;
-        this.team_size = team_size;
-        this.min_player = min_player;
-        this.max_player = max_player;
-        this.axisAlignedBB = axisAlignedBB;
-        this.lobby = lobby;
-        this.signs = signs;
-        this.teams = teams;
-        this.resources = resources;
-        this.gamePlayers = new ArrayList<>();
-        this.wait_time = wait_time;
+    @LoadFromConfig(path = "team_size")
+    @Getter
+    @Setter
+    private String team_size;
 
-        this.isCountingDown = false;
+    @LoadFromConfig(path = "min_player")
+    @Getter
+    @Setter
+    private String min_player;
 
-        init();
+    @LoadFromConfig(path = "max_player")
+    @Getter
+    @Setter
+    private String max_player;
+
+    @Getter
+    @Setter
+    private AxisAlignedBB region;
+
+    @Getter
+    @Setter
+    private Location lobby;
+
+    @Getter
+    @Setter
+    private List<Sign> signs;
+
+    @Getter
+    @Setter
+    private List<Team> teams;
+
+    @Getter
+    @Setter
+    private List<Resource> resources;
+
+    @Getter
+    @Setter
+    private GameStatue statue;
+    @Getter
+    private List<GamePlayer> gamePlayers;
+    @Getter
+    private Map<Team, List<Guardian>> guardians;
+    @Getter
+    private BukkitTask task;
+
+    public Game(final File gameFile) {
+        // 加载配置
+        FileConfiguration config = YamlConfig.loadConfiguration(gameFile);
+        ConfigLoader.load(this, config);
+
+        this.region = (AxisAlignedBB) config.get("region");
+
+        this.lobby = (Location) config.get("lobby");
+
+        this.signs = (List<Sign>) config.getList("signs");
+
+        this.teams = (List<Team>) config.getList("teams");
+
+        this.resources = (List<Resource>) config.getList("resources");
+
+        this.statue = Arrays.stream(this.getClass().getFields()).anyMatch(f -> {
+            f.setAccessible(true);
+            try {
+                return !f.getName().equals("signs") && f.get(Game.this) == null;
+            } catch (IllegalAccessException ignore) {
+                return false;
+            }
+        }) ? GameStatue.STOP : GameStatue.WAITING;
+        gamePlayers = new ArrayList<>();
+        guardians = new HashMap<>();
+
+        this.task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                // TODO: Implement
+            }
+        }.runTaskTimer(ApexBattle.getInstance(), 20L, 20L);
+
+        games.add(this);
     }
 
-    public void onQuit(final Player p) {
-        for (int i = 0; i < this.gamePlayers.size(); i++) {
-            GamePlayer gp = this.gamePlayers.get(i);
-            if (gp.getPlayer().getUniqueId().equals(p.getUniqueId())) {
-                gp.teleport(gp.getPrevLoc());
-                this.gamePlayers.remove(i);
-                break;
-            }
+    /**
+     * 玩家加入游戏
+     *
+     * @param p 玩家
+     */
+    public void addPlayer(final Player p) {
+        GamePlayer gamePlayer = new GamePlayer(p, p.getLocation(), p.getInventory());
+        gamePlayer.teleport(this.lobby);
+        gamePlayer.getPlayer().getInventory().clear();
+        this.gamePlayers.add(gamePlayer);
+    }
+
+    /**
+     * 玩家退出游戏
+     *
+     * @param p 玩家
+     */
+    public void removePlayer(final Player p) {
+        GamePlayer gamePlayer = this.gamePlayers.stream().filter(player -> player.getPlayer().getUniqueId().equals(p.getUniqueId())).findFirst().orElse(null);
+        if (gamePlayer == null) {
+            return;
         }
-        updateSigns();
+        gamePlayer.teleport(gamePlayer.getPrevLoc());
+        gamePlayer.setInv(gamePlayer.getPrevInv());
+        this.gamePlayers.remove(gamePlayer);
     }
 
-    public void onJoin(final Player p) {
-        GamePlayer newGp = new GamePlayer(p, p.getLocation());
-        this.gamePlayers.add(newGp);
-        newGp.teleport(this.lobby);
-        newGp.getPlayer().setGameMode(GameMode.SURVIVAL);
-        updateSigns();
+    /**
+     * 重置地图
+     */
+    private void reset() {
+        Bukkit.unloadWorld(this.region.getWorld(), false);
+        WorldUtil.resetWorld(this.region.getWorld(), this.name);
+        WorldCreator worldCreator = new WorldCreator(this.region.getWorld().getName());
+        AsyncWorld asyncWorld = AsyncWorld.create(worldCreator);
+        asyncWorld.commit();
     }
 
-    public GamePlayer getGamePlayer(final Player p) {
-        for (GamePlayer gamePlayer : this.gamePlayers) {
-            if (gamePlayer.getPlayer().getUniqueId().equals(p.getUniqueId())) {
-                return gamePlayer;
+    /**
+     * 保存游戏信息到文件
+     *
+     * @param file 文件
+     * @return 是否成功
+     */
+    public boolean saveToFile(final File file) {
+        try {
+            if (!file.exists() && !file.createNewFile()) {
+                return false;
             }
+            FileConfiguration config = YamlConfig.loadConfiguration(file);
+            config.set("name", this.name);
+            config.set("team_size", this.team_size);
+            config.set("min_player", this.min_player);
+            config.set("max_player", this.max_player);
+            config.set("region", this.region);
+            config.set("lobby", this.lobby);
+            config.set("resources", this.resources);
+            config.set("signs", this.signs);
+            config.set("teams", this.teams);
+            config.save(file);
+            return true;
+        } catch (IOException ignore) {
+            return false;
         }
-        return null;
     }
 
-    private void updateSigns() {
-        for (SignHandler signHandler : signs) {
-            Block block = signHandler.getLoc().getBlock();
-            if (block != null && block.getType().name().contains("SIGN")) {
-                Sign sign = (Sign) block.getState();
-                List<String> msg = status == GameStatus.WAITING || status == GameStatus.GAMING ? status == GameStatus.WAITING ? waiting : gaming : stop;
-                for (int i = 0; i < 4; i++) {
-                    sign.setLine(i, msg.get(i)
-                            .replace("%name%", this.name)
-                            .replace("%online%", String.valueOf(this.gamePlayers.size())));
-                }
-                sign.update();
-            }
-        }
+    /**
+     * 卸载
+     */
+    public void disable() {
+        this.task.cancel();
+        this.gamePlayers.forEach(gamePlayer -> {
+            gamePlayer.teleport(gamePlayer.getPrevLoc());
+            gamePlayer.setInv(gamePlayer.getPrevInv());
+        });
+        this.gamePlayers.clear();
+        this.reset();
     }
 
-    private void init() {
-        currentTick = 0;
-        Bukkit.getScheduler().runTaskTimer(ApexBattle.getInst(), () -> {
-            switch (this.status) {
-                case WAITING: {
-                    if (this.gamePlayers.size() >= this.min_player /*&& this.teams.stream().allMatch(t -> t.gamePlayers.size() > 0)*/) {
-                        if (this.isCountingDown) {
-                            this.need_time--;
-
-                            if (this.need_time < 1) {
-                                this.setStatus(GameStatus.GAMING);
-                                this.isCountingDown = false;
-                                for (GamePlayer gamePlayer : this.gamePlayers) {
-                                    if (gamePlayer.getTeam() == null) {
-                                        gamePlayer.setTeam(this.teams.get(new Random().nextInt(this.teams.size() - 1)));
-                                    }
-                                }
-                                for (Team team : this.teams) {
-                                    for (GamePlayer gamePlayer : team.gamePlayers) {
-                                        gamePlayer.teleport(team.spawn);
-                                    }
-                                }
-                            } else {
-                                for (GamePlayer gamePlayer : this.gamePlayers) {
-                                    gamePlayer.sendTitle("§a" + this.need_time);
-                                }
-                            }
-                        } else {
-                            this.need_time = this.wait_time;
-                            this.isCountingDown = true;
-                        }
-                    } else {
-                        if (this.isCountingDown) {
-                            this.isCountingDown = false;
-                        }
-                    }
-                    break;
-                }
-                case GAMING: {
-                    for (Resource resource : this.resources) {
-                        if (currentTick % resource.itemHandler.getInterval() == 0) {
-                            resource.spawn.getWorld().dropItemNaturally(resource.spawn, resource.itemHandler.createItem());
-                        }
-                    }
-                    for (GamePlayer gamePlayer : this.gamePlayers) {
-                        if (!gamePlayer.isColliding(this.axisAlignedBB)) {
-                            gamePlayer.damage(DamageSource.OUT_OF_WORLD, 7);
-                        }
-                    }
-                    break;
-                }
-                case ENDING: {
-                    if (this.isCountingDown) {
-                        this.need_time--;
-                        if (this.need_time <= 0) {
-                            this.isCountingDown = false;
-                            this.setStatus(GameStatus.STOP);
-                        }
-                    } else {
-                        this.isCountingDown = true;
-                    }
-                    break;
-                }
-                case STOP: {
-                    break;
-                }
-            }
-            currentTick++;
-        }, 20L, 20L);
-    }
-
-    public static class SignHandler {
+    @RequiredArgsConstructor
+    public static class GamePlayer {
         @Getter
-        private final Location loc;
-
-        public SignHandler(final World world, final double x, final double y, final double z) {
-            this.loc = new Location(world, x, y, z);
-        }
-    }
-
-    public static class Resource {
-        private final ItemHandler itemHandler;
-        private final Location spawn;
-
-        public Resource(final ItemHandler itemHandler, final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
-            this.itemHandler = itemHandler;
-            this.spawn = new Location(world, x, y, z, yaw, pitch);
-        }
-    }
-
-    public static class Team {
+        private final Player player;
         @Getter
-        private final Location spawn;
+        private final Location prevLoc;
         @Getter
-        private final List<GamePlayer> gamePlayers;
+        private final PlayerInventory prevInv;
         @Getter
-        private final DyeColor color;
-        private final String name;
+        @Setter
+        private Team team;
 
-        public Team(final DyeColor color, final String name, final World world, final double x, final double y, final double z, final float yaw, final float pitch) {
-            this.spawn = new Location(world, x, y, z, yaw, pitch);
-            this.gamePlayers = new ArrayList<>();
-            this.color = color;
-            this.name = name;
+        /**
+         * 传送
+         *
+         * @param to 地点
+         */
+        public void teleport(final Location to) {
+            this.player.teleport(to, PlayerTeleportEvent.TeleportCause.PLUGIN);
         }
 
-        private void addPlayer(final GamePlayer gamePlayer) {
-            this.gamePlayers.add(gamePlayer);
-        }
-
-        private void removePlayer(final GamePlayer gamePlayer) {
-            this.gamePlayers.remove(gamePlayer);
-        }
-
-        public void win() {
-            for (GamePlayer gamePlayer : this.gamePlayers) {
-                gamePlayer.sendTitle("§a你赢了！");
-                FireworkEffect effect = FireworkEffect.builder().trail(true).flicker(true).withColor(Color.RED).withFade(Color.ORANGE).with(FireworkEffect.Type.STAR).build();
-                Firework fw = gamePlayer.getPlayer().getWorld().spawn(gamePlayer.getPlayer().getLocation(), Firework.class);
-                FireworkMeta meta = fw.getFireworkMeta();
-                meta.addEffect(effect);
-                meta.setPower(0);
-                fw.setFireworkMeta(meta);
-                fw.detonate();
+        /**
+         * 设置背包
+         *
+         * @param inv 新的背包
+         */
+        public void setInv(final PlayerInventory inv) {
+            this.player.getInventory().clear();
+            for (int i = 0; i < 40; i++) {
+                this.player.getInventory().setItem(i, inv.getItem(i));
             }
         }
     }
 
-    public enum GameStatus {
-        STOP, WAITING, GAMING, ENDING
+    public enum GameStatue {
+        WAITING, GAMING, ENDING, STOP
     }
 }

@@ -2,12 +2,16 @@ package xyz.hstudio.apexbattle.util;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.util.Vector;
 
-public class AxisAlignedBB implements Cloneable {
+import java.util.HashMap;
+import java.util.Map;
 
-    public static final AxisAlignedBB playerAABB = new AxisAlignedBB(new Vector(-0.3, 0, -0.3), new Vector(0.3, 1.8, 0.3), null);
+public class AxisAlignedBB implements Cloneable, ConfigurationSerializable {
 
     @Getter
     @Setter
@@ -19,16 +23,34 @@ public class AxisAlignedBB implements Cloneable {
     @Setter
     private World world;
 
+    // 玩家的碰撞箱
+    public static final AxisAlignedBB playerCollisionBox = new AxisAlignedBB(new Vector(-0.3, 0, -0.3), new Vector(0.3, 1.8, 0.3), null);
+
     public AxisAlignedBB(final Vector min, final Vector max, final World world) {
         this.min = min;
         this.max = max;
         this.world = world;
     }
 
-    public AxisAlignedBB(final double minX, final double minY, final double minZ, final double maxX, final double maxY, final double maxZ, final World world) {
-        this(new Vector(minX, minY, minZ), new Vector(maxX, maxY, maxZ), world);
+    public AxisAlignedBB() {
+        this(new Vector(0, 0, 0), new Vector(0, 0, 0), null);
     }
 
+    public void translate(final Vector vector) {
+        min.add(vector);
+        max.add(vector);
+    }
+
+    public void translate(final Location location) {
+        translate(location.toVector());
+    }
+
+    /**
+     * 判断是否与另一个碰撞箱重合
+     *
+     * @param other 另一个碰撞箱
+     * @return 是否重合
+     */
     public boolean isColliding(final AxisAlignedBB other) {
         if (max.getX() < other.getMin().getX() || min.getX() > other.getMax().getX()) {
             return false;
@@ -37,12 +59,6 @@ public class AxisAlignedBB implements Cloneable {
             return false;
         }
         return !(max.getZ() < other.getMin().getZ()) && !(min.getZ() > other.getMax().getZ());
-    }
-
-    public AxisAlignedBB translate(final Vector vector) {
-        min.add(vector);
-        max.add(vector);
-        return this;
     }
 
     public AxisAlignedBB clone() {
@@ -56,5 +72,19 @@ public class AxisAlignedBB implements Cloneable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Map<String, Object> serialize() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("world", this.world.getName());
+        data.put("min", this.min);
+        data.put("max", this.max);
+        return data;
+    }
+
+    @SuppressWarnings("unused")
+    public static AxisAlignedBB deserialize(Map<String, Object> args) {
+        World world = Bukkit.getWorld((String) args.get("world"));
+        return new AxisAlignedBB((Vector) args.get("min"), (Vector) args.get("max"), world);
     }
 }

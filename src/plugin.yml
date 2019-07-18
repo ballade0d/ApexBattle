@@ -1,6 +1,11 @@
 name: ApexBattle
 main: xyz.hstudio.apexbattle.ApexBattle
 version: '1.0'
+author: MrCraftGoo
+depend: [WorldEdit, FastAsyncWorldEdit]
 commands:
   apex:
     description: Main command
+permissions:
+  apex.command.use:
+    default: true
