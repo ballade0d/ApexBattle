@@ -41,6 +41,9 @@ public class MessageManager {
     @LoadFromConfig(path = "not_in_game")
     public String not_in_game;
 
+    @LoadFromConfig(path = "no_enough_player")
+    public String no_enough_player;
+
     public MessageManager() {
         ConfigLoader.load(this, ApexBattle.getInstance().getMessage());
     }

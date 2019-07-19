@@ -1,15 +1,12 @@
-# 插件消息前缀
-prefix: '§6§lApexBattle §7§l>> §e'
-
 # 游戏前需等待的时间（秒）
 wait_time: 60
 
-# 被保护物品设置
+# 被保护物品
 protected:
   # 名字
   # 注：安德华拉诺特，Andvarinaut。是北欧神话中侏儒安德瓦利（Andvari）的戒指
   # 也有说法认为是手环。其名字的意思是“安德瓦利之宝”
-  name: '安德华拉诺特'
+  name: '§c§k§l|§4§l安德华拉诺特§c§k§l|'
   # 物品类型。默认为下界之星
   material: NETHER_STAR
   # 是否显示附魔闪光效果
@@ -64,21 +61,6 @@ resource:
 
 # 特殊物品设置
 special:
-  # 船（载具）设置
-  BOAT:
-    # 是否开启
-    enabled: true
-    # 船的血量
-    health: 10
-  # 潜影贝（防御措施）设置
-  SHULKER:
-    enabled: true
-    # 最大攻击距离
-    max_dist: 12
-    # 伤害设置
-    damage: 5
-    # 攻击间隔（以tick测量）
-    damage_interval: 20
   # 末影珍珠（载具）设置
   ENDER_PEARL:
     enabled: true
@@ -90,6 +72,4 @@ special:
   ELYTRA:
     enabled: true
     # 起飞时的弹射高度
-    y_multiplier: 5
-    # 最低起飞高度（与地面的距离）
-    min_dist_to_ground: 3
+    y_addition: 5

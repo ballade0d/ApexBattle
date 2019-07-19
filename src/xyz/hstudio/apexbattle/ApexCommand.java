@@ -23,7 +23,6 @@ import java.util.*;
 public class ApexCommand implements CommandExecutor {
 
     private static final Map<String, Map.Entry<Cmd, Method>> commandMap = new HashMap<>();
-    private static ApexCommand instance;
 
     ApexCommand() {
         Cmd annotation;
@@ -40,7 +39,6 @@ public class ApexCommand implements CommandExecutor {
             // 注册
             commandMap.put(name, new AbstractMap.SimpleEntry<>(annotation, method));
         }
-        instance = this;
         Bukkit.getPluginCommand("apex").setExecutor(this);
     }
 
@@ -100,7 +98,7 @@ public class ApexCommand implements CommandExecutor {
             argList.subList(0, 2).clear();
             try {
                 // 执行指令
-                if (!(boolean) method.invoke(instance, manager, sender, argList.toArray(new String[]{}))) {
+                if (!(boolean) method.invoke(this, manager, sender, argList.toArray(new String[]{}))) {
                     sender.sendMessage(manager.prefix + manager.command_wrong
                             .replace("%first%", first)
                             .replace("%args%", availableArgs));
@@ -295,7 +293,6 @@ public class ApexCommand implements CommandExecutor {
             availableArgs = "<游戏名>"
     )
     private boolean leave(final MessageManager manager, final CommandSender sender, final String[] args) {
-        String name = args[0];
         Player p = (Player) sender;
         // 判断是否在游戏中
         Game playing = GameUtil.getGamePlaying(p);

@@ -1,6 +1,7 @@
 package xyz.hstudio.apexbattle.util;
 
 import com.google.common.io.Files;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import xyz.hstudio.apexbattle.ApexBattle;
 
@@ -18,7 +19,7 @@ public class WorldUtil {
      */
     public static boolean saveWorld(final World world, final String game) {
         String name = world.getName();
-        File regionDir = new File(name + "/region");
+        File regionDir = new File(Bukkit.getWorldContainer(), name + "/region");
         if (!regionDir.exists()) {
             return false;
         }
@@ -60,7 +61,7 @@ public class WorldUtil {
             return false;
         }
         try {
-            File newFile = new File(name + "/region");
+            File newFile = new File(Bukkit.getWorldContainer(), name + "/region");
             if (newFile.exists() && newFile.isDirectory()) {
                 File[] oldRegions = newFile.listFiles();
                 if (oldRegions != null) {
@@ -78,7 +79,7 @@ public class WorldUtil {
                 }
             }
             for (File region : regions) {
-                newFile = new File(name + "/region" + "/" + region.getName());
+                newFile = new File(Bukkit.getWorldContainer(), name + "/region" + "/" + region.getName());
                 Files.copy(region, newFile);
 
             }

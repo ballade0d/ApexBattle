@@ -16,3 +16,5 @@ team_add_successfully: '队伍添加成功！'
 lobby_set_successfully: '大厅设置成功！'
 already_in_game: '你已经加入一个游戏了！'
 not_in_game: '你不在游戏中，无法退出！'
+
+no_enough_player: '人数不足，停止计时！'

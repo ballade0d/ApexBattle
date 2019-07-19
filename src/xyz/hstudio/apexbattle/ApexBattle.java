@@ -3,10 +3,11 @@ package xyz.hstudio.apexbattle;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.hstudio.apexbattle.config.ConfigManager;
 import xyz.hstudio.apexbattle.config.MessageManager;
-import xyz.hstudio.apexbattle.config.YamlConfig;
 import xyz.hstudio.apexbattle.game.Game;
 import xyz.hstudio.apexbattle.game.Resource;
 import xyz.hstudio.apexbattle.game.Sign;
@@ -31,6 +32,8 @@ public class ApexBattle extends JavaPlugin {
     @Getter
     private FileConfiguration message;
     @Getter
+    private ConfigManager configManager;
+    @Getter
     private MessageManager messageManager;
 
     public ApexBattle() {
@@ -39,6 +42,7 @@ public class ApexBattle extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        long start = System.currentTimeMillis();
         // 判断版本
         NmsUtil.init();
         if (NmsUtil.getInstance() == null) {
@@ -81,9 +85,11 @@ public class ApexBattle extends JavaPlugin {
             } catch (Exception e) {
                 e.printStackTrace();
                 Logger.info("创建配置文件失败！");
+                Bukkit.getPluginManager().disablePlugin(this);
+                return;
             }
         }
-        this.config = YamlConfig.loadConfiguration(configFile);
+        this.config = YamlConfiguration.loadConfiguration(configFile);
 
         // 加载message.yml
         File messageFile = new File(getDataFolder(), "message.yml");
@@ -93,10 +99,13 @@ public class ApexBattle extends JavaPlugin {
             } catch (Exception e) {
                 e.printStackTrace();
                 Logger.info("创建语言文件失败！");
+                Bukkit.getPluginManager().disablePlugin(this);
+                return;
             }
         }
-        this.message = YamlConfig.loadConfiguration(messageFile);
+        this.message = YamlConfiguration.loadConfiguration(messageFile);
 
+        this.configManager = new ConfigManager();
         this.messageManager = new MessageManager();
         new ApexCommand();
         new EventListener();
@@ -105,6 +114,11 @@ public class ApexBattle extends JavaPlugin {
         if (games != null) {
             Arrays.stream(games).forEach(Game::new);
         }
+
+        Logger.info("已加载 " + Game.getGames().size() + " 个游戏！");
+
+        long end = System.currentTimeMillis();
+        Logger.info("ApexBattle已启动！耗时：" + ((end - start) / 1000D) + "秒");
     }
 
     @Override
