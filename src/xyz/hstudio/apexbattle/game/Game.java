@@ -290,8 +290,10 @@ public class Game {
             gamePlayer.setInv(gamePlayer.getQuitInv());
             this.gamePlayers.add(gamePlayer);
             Team team = gamePlayer.getTeam();
+            team.getGamePlayers().add(gamePlayer);
             if (team.isLose()) {
                 gamePlayer.teleport(this.spectate);
+                gamePlayer.setGameMode(GameMode.SPECTATOR);
                 p.getInventory().clear();
             }
         } else {

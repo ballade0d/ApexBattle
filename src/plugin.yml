@@ -1,6 +1,6 @@
 name: ApexBattle
 main: xyz.hstudio.apexbattle.ApexBattle
-version: '1.0'
+version: '1.1'
 author: MrCraftGoo
 commands:
   apex:
@@ -19,8 +19,6 @@ permissions:
   apex.command.addresource:
     default: op
   apex.command.addteam:
-    default: op
-  apex.command.addshop:
     default: op
   apex.command.save:
     default: op

@@ -7,62 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbee312d-075f-4e84-bb3c-6e368c3e82ab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/MetricsLite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ShopManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_10_R1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_11_R1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_8_R3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_9_R2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/shop.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/shop/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/shop/ShopListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ColorUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ExperienceManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ItemUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/RandomUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/FastAsyncWorldEdit.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Spigot.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Spigot.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/WorldEdit.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApexBattle.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ApexBattle.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/META-INF/ApexBattle.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/ApexBattle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/ApexBattle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$GameStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$Resource.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$SignHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$Team.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/GamePlayer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/internal/ItemHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/internal/ProtectedItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/listener/EventListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/listener/EventListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/GameUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/GameUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/ItemUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/ItemUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/MessageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/MessageManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Sign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Sign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Team.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/message.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/message.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/INMS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/INMS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_12_R1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_12_R1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_13_R2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_13_R2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_14_R1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_14_R1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AxisAlignedBB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AxisAlignedBB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/GameUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/GameUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/NmsUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/NmsUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/VersionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/VersionUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/WorldUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/WorldUtil.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -233,7 +182,7 @@
       <workItem from="1564105531183" duration="69000" />
       <workItem from="1564146991003" duration="336000" />
       <workItem from="1564153664645" duration="3417000" />
-      <workItem from="1564214727049" duration="9938000" />
+      <workItem from="1564214727049" duration="13611000" />
     </task>
     <task id="LOCAL-00001" summary="完成60%">
       <created>1563187875280</created>
@@ -291,7 +240,14 @@
       <option name="project" value="LOCAL" />
       <updated>1563526643950</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Push">
+      <created>1564235930497</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1564235930497</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -333,6 +289,7 @@
     <MESSAGE value="用了一堆骚方法，几乎全部重写" />
     <MESSAGE value="大致完成" />
     <MESSAGE value="90%" />
-    <option name="LAST_COMMIT_MESSAGE" value="90%" />
+    <MESSAGE value="Push" />
+    <option name="LAST_COMMIT_MESSAGE" value="Push" />
   </component>
 </project>
