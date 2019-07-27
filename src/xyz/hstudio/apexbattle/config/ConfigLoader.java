@@ -72,6 +72,8 @@ public class ConfigLoader {
                     } else {
                         field.set(object, config.getList(path));
                     }
+                } else {
+                    field.set(object, config.get(path));
                 }
             } catch (IllegalAccessException ignore) {
                 return false;

@@ -18,6 +18,7 @@ public class WorldUtil {
      * @return 是否成功
      */
     public static boolean saveWorld(final World world, final String game) {
+        world.save();
         String name = world.getName();
         File regionDir = new File(Bukkit.getWorldContainer(), name + "/region");
         if (!regionDir.exists()) {
@@ -28,7 +29,23 @@ public class WorldUtil {
             return false;
         }
         try {
-            File newFile;
+            File newFile = new File(ApexBattle.getInstance().getDataFolder(), "map/" + game);
+            if (newFile.exists() && newFile.isDirectory()) {
+                File[] oldRegions = newFile.listFiles();
+                if (oldRegions != null) {
+                    for (File oldRegion : oldRegions) {
+                        if (!oldRegion.delete()) {
+                            return false;
+                        }
+                    }
+                }
+                if (!newFile.delete()) {
+                    return false;
+                }
+                if (!newFile.mkdir()) {
+                    return false;
+                }
+            }
             for (File region : regions) {
                 newFile = new File(ApexBattle.getInstance().getDataFolder(), "map/" + game + "/" + region.getName());
                 if (!newFile.getParentFile().exists() && !newFile.getParentFile().mkdirs()) {
@@ -66,7 +83,7 @@ public class WorldUtil {
                 File[] oldRegions = newFile.listFiles();
                 if (oldRegions != null) {
                     for (File oldRegion : oldRegions) {
-                        if (oldRegion.delete()) {
+                        if (!oldRegion.delete()) {
                             return false;
                         }
                     }
@@ -74,14 +91,13 @@ public class WorldUtil {
                 if (!newFile.delete()) {
                     return false;
                 }
-                if (!newFile.createNewFile()) {
+                if (!newFile.mkdir()) {
                     return false;
                 }
             }
             for (File region : regions) {
                 newFile = new File(Bukkit.getWorldContainer(), name + "/region" + "/" + region.getName());
                 Files.copy(region, newFile);
-
             }
         } catch (IOException e) {
             e.printStackTrace();

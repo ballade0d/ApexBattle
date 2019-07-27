@@ -3,6 +3,7 @@ package xyz.hstudio.apexbattle.game;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
@@ -14,7 +15,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class Team implements ConfigurationSerializable {
 
-    @Getter
     private final String name;
     @Getter
     private final String color;
@@ -24,6 +24,12 @@ public class Team implements ConfigurationSerializable {
     @Setter
     private Game.GamePlayer holder;
     @Getter
+    @Setter
+    private boolean lose = false;
+    @Getter
+    @Setter
+    private int count = 5;
+    @Getter
     private List<Game.GamePlayer> gamePlayers = new ArrayList<>();
 
     public Map<String, Object> serialize() {
@@ -32,6 +38,14 @@ public class Team implements ConfigurationSerializable {
         data.put("color", this.color);
         data.put("loc", this.location);
         return data;
+    }
+
+    public String getName() {
+        return getColor() + name;
+    }
+
+    public ChatColor getColor() {
+        return ChatColor.valueOf(this.color);
     }
 
     @SuppressWarnings("unused")

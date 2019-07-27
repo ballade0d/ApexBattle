@@ -1,10 +1,9 @@
 package xyz.hstudio.apexbattle;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import xyz.hstudio.apexbattle.annotation.Cmd;
 import xyz.hstudio.apexbattle.config.MessageManager;
@@ -20,7 +19,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class ApexCommand implements CommandExecutor {
+public class ApexCommand implements TabExecutor {
 
     private static final Map<String, Map.Entry<Cmd, Method>> commandMap = new HashMap<>();
 
@@ -39,7 +38,6 @@ public class ApexCommand implements CommandExecutor {
             // 注册
             commandMap.put(name, new AbstractMap.SimpleEntry<>(annotation, method));
         }
-        Bukkit.getPluginCommand("apex").setExecutor(this);
     }
 
     @Override
@@ -64,7 +62,7 @@ public class ApexCommand implements CommandExecutor {
         // 是插件的指令
         if (main.equalsIgnoreCase("apex")) {
             // 获取第一个参数
-            String first = args[1];
+            String first = args[1].toLowerCase();
             // 判断是否有该指令
             if (!commandMap.containsKey(first)) {
                 sender.sendMessage(manager.prefix + manager.no_command_found);
@@ -109,10 +107,22 @@ public class ApexCommand implements CommandExecutor {
         }
     }
 
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        List<String> completion = new ArrayList<>();
+        if (args.length == 1) {
+            completion.addAll(commandMap.keySet());
+        } else if (args.length == 2) {
+            Game.getGames().forEach(game -> completion.add(game.getName()));
+        }
+        Collections.sort(completion);
+        return completion;
+    }
+
     @Cmd(
             name = "create",
             perm = "apex.command.create",
-            availableArgs = "<游戏名>"
+            availableArgs = "<游戏名> <最小人数> <最大人数>"
     )
     private boolean create(final MessageManager manager, final CommandSender sender, final String[] args) {
         String name = args[0];
@@ -123,6 +133,9 @@ public class ApexCommand implements CommandExecutor {
         }
         // 创建游戏
         if (FileUtil.createGame(name)) {
+            Game game = GameUtil.getGame(name);
+            game.setMin_player(Integer.parseInt(args[1]));
+            game.setMax_player(Integer.parseInt(args[2]));
             sender.sendMessage(manager.prefix + manager.create_successfully);
         } else {
             sender.sendMessage(manager.prefix + manager.create_fail);
@@ -181,6 +194,27 @@ public class ApexCommand implements CommandExecutor {
         // 设置大厅
         game.setLobby(p.getLocation());
         sender.sendMessage(manager.prefix + manager.lobby_set_successfully);
+        return true;
+    }
+
+    @Cmd(
+            name = "setspectate",
+            onlyPlayer = true,
+            perm = "apex.command.setspectate",
+            availableArgs = "<游戏名>"
+    )
+    private boolean setSpectate(final MessageManager manager, final CommandSender sender, final String[] args) {
+        String name = args[0];
+        // 判断游戏存在性
+        Game game = GameUtil.getGame(name);
+        if (game == null) {
+            sender.sendMessage(manager.prefix + manager.game_does_not_exist);
+            return true;
+        }
+        Player p = (Player) sender;
+        // 设置旁观者出生点
+        game.setSpectate(p.getLocation());
+        sender.sendMessage(manager.prefix + manager.spectate_set_successfully);
         return true;
     }
 
@@ -244,16 +278,16 @@ public class ApexCommand implements CommandExecutor {
         File gameFile = new File(ApexBattle.getInstance().getDataFolder(), "game/" + name + ".yml");
         // 保存游戏信息
         if (!game.saveToFile(gameFile)) {
-            sender.sendMessage(manager.prefix + manager.save_fail);
+            sender.sendMessage(manager.prefix + manager.save_fail + " 原因：保存游戏信息");
         }
         World world = game.getRegion() == null ? null : game.getRegion().getWorld();
         if (world == null) {
-            sender.sendMessage(manager.prefix + manager.save_fail);
+            sender.sendMessage(manager.prefix + manager.save_fail + " 原因：世界不存在");
             return true;
         }
         // 保存地图
         if (!WorldUtil.saveWorld(world, game.getName())) {
-            sender.sendMessage(manager.prefix + manager.save_fail);
+            sender.sendMessage(manager.prefix + manager.save_fail + " 原因：保存地图文件");
             return true;
         }
         sender.sendMessage(manager.prefix + manager.save_successfully);
@@ -281,8 +315,12 @@ public class ApexCommand implements CommandExecutor {
             sender.sendMessage(manager.prefix + manager.game_does_not_exist);
             return true;
         }
-        // 加入游戏
-        game.addPlayer(p);
+        if (game.getStatue() == Game.GameStatue.WAITING || game.getLostPlayer().containsKey(p.getUniqueId())) {
+            // 加入游戏
+            game.addPlayer(p);
+        } else {
+            p.sendMessage(manager.prefix + manager.cannot_join);
+        }
         return true;
     }
 

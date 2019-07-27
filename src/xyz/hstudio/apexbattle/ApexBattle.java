@@ -2,17 +2,21 @@ package xyz.hstudio.apexbattle;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.hstudio.apexbattle.config.ConfigManager;
 import xyz.hstudio.apexbattle.config.MessageManager;
+import xyz.hstudio.apexbattle.config.ShopManager;
 import xyz.hstudio.apexbattle.game.Game;
 import xyz.hstudio.apexbattle.game.Resource;
 import xyz.hstudio.apexbattle.game.Sign;
 import xyz.hstudio.apexbattle.game.Team;
 import xyz.hstudio.apexbattle.listener.EventListener;
+import xyz.hstudio.apexbattle.shop.Item;
+import xyz.hstudio.apexbattle.shop.ShopListener;
 import xyz.hstudio.apexbattle.util.AxisAlignedBB;
 import xyz.hstudio.apexbattle.util.Logger;
 import xyz.hstudio.apexbattle.util.NmsUtil;
@@ -32,9 +36,13 @@ public class ApexBattle extends JavaPlugin {
     @Getter
     private FileConfiguration message;
     @Getter
+    private FileConfiguration shop;
+    @Getter
     private ConfigManager configManager;
     @Getter
     private MessageManager messageManager;
+    @Getter
+    private ShopManager shopManager;
 
     public ApexBattle() {
         instance = this;
@@ -75,6 +83,7 @@ public class ApexBattle extends JavaPlugin {
         ConfigurationSerialization.registerClass(Resource.class, "Resource");
         ConfigurationSerialization.registerClass(Sign.class, "Sign");
         ConfigurationSerialization.registerClass(Team.class, "Team");
+        ConfigurationSerialization.registerClass(Item.class, "Item");
         ConfigurationSerialization.registerClass(AxisAlignedBB.class, "AxisAlignedBB");
 
         // 加载config.yml
@@ -90,6 +99,7 @@ public class ApexBattle extends JavaPlugin {
             }
         }
         this.config = YamlConfiguration.loadConfiguration(configFile);
+        this.configManager = new ConfigManager();
 
         // 加载message.yml
         File messageFile = new File(getDataFolder(), "message.yml");
@@ -104,21 +114,45 @@ public class ApexBattle extends JavaPlugin {
             }
         }
         this.message = YamlConfiguration.loadConfiguration(messageFile);
-
-        this.configManager = new ConfigManager();
         this.messageManager = new MessageManager();
-        new ApexCommand();
-        new EventListener();
 
-        File[] games = gameDir.listFiles();
-        if (games != null) {
-            Arrays.stream(games).forEach(Game::new);
+        // 加载shop.yml
+        File shopFile = new File(getDataFolder(), "shop.yml");
+        if (!shopFile.exists()) {
+            try (InputStream in = getResource("xyz/hstudio/apexbattle/shop.yml")) {
+                Files.copy(in, shopFile.toPath());
+            } catch (Exception e) {
+                e.printStackTrace();
+                Logger.info("创建商店文件失败！");
+                Bukkit.getPluginManager().disablePlugin(this);
+                return;
+            }
         }
+        this.shop = YamlConfiguration.loadConfiguration(shopFile);
+        this.shopManager = new ShopManager();
 
-        Logger.info("已加载 " + Game.getGames().size() + " 个游戏！");
+        // 注册指令
+        TabExecutor executor = new ApexCommand();
+        Bukkit.getPluginCommand("apex").setExecutor(executor);
+        Bukkit.getPluginCommand("apex").setTabCompleter(executor);
+        // 监听器
+        new EventListener();
+        new ShopListener();
+
+        new MetricsLite(this);
 
         long end = System.currentTimeMillis();
         Logger.info("ApexBattle已启动！耗时：" + ((end - start) / 1000D) + "秒");
+
+        Bukkit.getScheduler().runTask(this, () -> {
+            // 启动所有房间
+            File[] games = gameDir.listFiles();
+            if (games != null) {
+                Arrays.stream(games).forEach(Game::new);
+            }
+
+            Logger.info("已加载 " + Game.getGames().size() + " 个游戏！");
+        });
     }
 
     @Override

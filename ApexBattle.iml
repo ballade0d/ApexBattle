@@ -8,8 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lombok" level="project" />
-    <orderEntry type="library" name="WorldEdit" level="project" />
-    <orderEntry type="library" name="FastAsyncWorldEdit" level="project" />
     <orderEntry type="library" name="Spigot" level="project" />
   </component>
 </module>

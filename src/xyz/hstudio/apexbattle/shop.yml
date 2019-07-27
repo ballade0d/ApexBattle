@@ -1,0 +1,280 @@
+title: '§a§l游戏商店'
+size: 9
+# 方块，武器，防具，工具，食物，药水，附魔，特殊道具，其他道具
+block:
+  icon:
+    ==: org.bukkit.inventory.ItemStack
+    type: SAND
+    amount: 1
+    meta:
+      ==: ItemMeta
+      meta-type: UNSPECIFIC
+      display-name: '§a方块'
+      enchants:
+        FIRE_ASPECT: 1
+      ItemFlags:
+        - HIDE_ENCHANTS
+  items:
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: IRON_INGOT,1
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: WOOL
+        amount: 6
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§a方块'
+other:
+  icon:
+    ==: org.bukkit.inventory.ItemStack
+    type: ENDER_PEARL
+    amount: 1
+    meta:
+      ==: ItemMeta
+      meta-type: UNSPECIFIC
+      display-name: '§d实用道具'
+      enchants:
+        FIRE_ASPECT: 1
+      ItemFlags:
+        - HIDE_ENCHANTS
+  items:
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,4
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: ENDER_PEARL
+        amount: 2
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§d末影珍珠'
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,4
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: ELYTRA
+        amount: 1
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§d鞘翅'
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: DIAMOND,3
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: ENCHANTMENT_TABLE
+        amount: 1
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§e附魔台'
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,3
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: TNT
+        amount: 1
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§cTNT'
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: IRON_INGOT,4
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: FISHING_ROD
+        amount: 1
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§c钓鱼竿'
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: DIAMOND,2
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: COMPASS
+        amount: 1
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§e指南针'
+          lore:
+            - '§e帮助你找到最近的持有者'
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: IRON_INGOT,1
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: ARROW
+        amount: 3
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§f箭'
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,4
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: BOW
+        amount: 1
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§f弓'
+eat:
+  icon:
+    ==: org.bukkit.inventory.ItemStack
+    type: GOLDEN_APPLE
+    amount: 1
+    meta:
+      ==: ItemMeta
+      meta-type: UNSPECIFIC
+      display-name: '§6食物'
+      enchants:
+        FIRE_ASPECT: 1
+      ItemFlags:
+        - HIDE_ENCHANTS
+  items:
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,2
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: GOLDEN_APPLE
+        amount: 2
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§e金苹果'
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: IRON_INGOT,1
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: GRILLED_PORK
+        amount: 3
+        meta:
+          ==: ItemMeta
+          meta-type: UNSPECIFIC
+          display-name: '§e熟猪肉'
+potion:
+  icon:
+    ==: org.bukkit.inventory.ItemStack
+    type: POTION
+    amount: 1
+    meta:
+      ==: ItemMeta
+      meta-type: UNSPECIFIC
+      display-name: '§d药水'
+      enchants:
+        FIRE_ASPECT: 1
+      ItemFlags:
+        - HIDE_ENCHANTS
+  items:
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: IRON_INGOT,6
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: SPLASH_POTION
+        amount: 1
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:weakness
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: IRON_INGOT,4
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: SPLASH_POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:harming
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,3
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: SPLASH_POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:slowness
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,4
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: SPLASH_POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:poison
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: IRON_INGOT,3
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:healing
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,3
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:swiftness
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,4
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:regeneration
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: DIAMOND,1
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:long_regeneration
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,6
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:strong_regeneration
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: GOLD_INGOT,4
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:strength
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: DIAMOND,2
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:strong_strength
+    - ==: xyz.hstudio.apexbattle.shop.Item
+      required: IRON_INGOT,2
+      reward:
+        ==: org.bukkit.inventory.ItemStack
+        type: POTION
+        meta:
+          ==: ItemMeta
+          meta-type: POTION
+          potion-type: minecraft:leaping

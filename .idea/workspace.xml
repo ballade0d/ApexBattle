@@ -6,41 +6,64 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbee312d-075f-4e84-bb3c-6e368c3e82ab" name="Default Changelist" comment="大致完成">
+    <list default="true" id="cbee312d-075f-4e84-bb3c-6e368c3e82ab" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/MetricsLite.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ShopManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_10_R1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_11_R1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_8_R3.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_9_R2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/shop.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/shop/Item.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/shop/ShopListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ColorUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ExperienceManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ItemUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/RandomUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/FastAsyncWorldEdit.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Spigot.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Spigot.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/WorldEdit.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApexBattle.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ApexBattle.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/META-INF/ApexBattle.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/ApexBattle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/ApexBattle.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game.yml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$GameStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$Resource.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$SignHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game$Team.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/GamePlayer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/internal/ItemHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/game/internal/ProtectedItem.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/listener/EventListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/listener/EventListener.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/GameUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/GameUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/Logger.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/ItemUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ApexBattle/xyz/hstudio/apexbattle/util/ItemUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/MessageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/MessageManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/YamlConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Resource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Sign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Sign.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Team.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/message.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/message.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/INMS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/INMS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_10_R1.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_11_R1.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_12_R1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_12_R1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_13_R2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_13_R2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_14_R1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_14_R1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_9_R2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/ChannelHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AxisAlignedBB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AxisAlignedBB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/GameUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/GameUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/NmsUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/NmsUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/VersionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/VersionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/WorldUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/WorldUtil.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,27 +90,6 @@
   <component name="FavoritesManager">
     <favorites_list name="ApexBattle" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="255" column="8" lean-forward="true" selection-start-line="255" selection-start-column="8" selection-end-line="255" selection-end-column="8" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2848#5003#0" expanded="true" />
-                <element signature="e#5002#5003#0" expanded="true" />
-                <element signature="e#7366#7367#0" expanded="true" />
-                <element signature="e#11596#11597#0" expanded="true" />
-                <element signature="e#11767#11768#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -96,178 +98,16 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>spa</find>
-      <find>addEnc</find>
-      <find>STAR</find>
-      <find>isSimilar</find>
-      <find>games</find>
-      <find>res</find>
-      <find>ENDING</find>
-      <find>list</find>
-      <find>List</find>
-      <find>Int</find>
-      <find>max</find>
-      <find>nbt</find>
-      <find>Tag</find>
-      <find>Compound</find>
-      <find>slot</find>
-      <find>chunks</find>
-      <find>createWorld</find>
-      <find>TODO:</find>
-      <find>PacketPlayInChat</find>
-      <find>reset</find>
-      <find>sendTitle</find>
-      <find>getItemMeta</find>
-      <find>setTexp</find>
-      <find>fire</find>
-      <find>save(</find>
-      <find>Yaml</find>
-    </findStrings>
-    <dirStrings>
-      <dir>F:\IdeaProjects\ApexBattle</dir>
-      <dir>F:\IdeaProjects\ApexBattle\src</dir>
-    </dirStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/EventListener.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/Predication.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/ItemHandler.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/internal/Resource.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/internal/SignHandler.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/BlockUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ItemUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/internal/ProtectedItem.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/NumberUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ColorUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/internal/ItemHandler.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AABB.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/GamePlayer.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/Game.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/annotation/LoadFromConfig.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/command/Create.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/command/ApexCommand.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/Message.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/Logger.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/YamlConfig.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Sign.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/modules/Module.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/annotation/Command.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/ChannelHandler.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigLoader.java" />
-        <option value="$PROJECT_DIR$/src/plugin.yml" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game.yml" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ConcurrentSet.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_10_R1.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_11_R1.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AxisAlignedBB.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/GameUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/FileUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config.yml" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/message.yml" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/MessageManager.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Team.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_9_R2.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/NmsUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/VersionUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_13_R2.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_14_R1.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/INMS.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_12_R1.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/WorldUtil.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigManager.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Resource.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java" />
-        <option value="$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java" />
-      </list>
-    </option>
   </component>
   <component name="MavenRunner">
     <option name="jreName" value="1.8" />
     <option name="vmOptions" value="-Xms128M -Xmx512M -Duser.language=zh -Dfile.encoding=UTF-8" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="165" />
-    <option name="y" value="-20" />
-    <option name="width" value="734" />
-    <option name="height" value="867" />
-  </component>
+  <component name="ProjectId" id="1OYGCR88Ba8cxZE8qOQVH8p8emD" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="listener" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="nms" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ApexBattle" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ApexBattle" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="apexbattle" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
@@ -302,6 +142,40 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager" selected="Application.ApexBattle">
+    <configuration name="ApexBattle" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="xyz.hstudio.apexbattle.ApexBattle" />
+      <module name="ApexBattle" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="xyz.hstudio.apexbattle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="xyz.hstudio.apexbattle.Test" />
+      <module name="ApexBattle" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="xyz.hstudio.apexbattle.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ApexBattle" />
+        <item itemvalue="Application.Test" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -343,7 +217,23 @@
       <workItem from="1563501377304" duration="12000" />
       <workItem from="1563501449494" duration="99000" />
       <workItem from="1563509177556" duration="43000" />
-      <workItem from="1563515473381" duration="7480000" />
+      <workItem from="1563515473381" duration="17037000" />
+      <workItem from="1563547719528" duration="19000" />
+      <workItem from="1563687408479" duration="9000" />
+      <workItem from="1563803069391" duration="6336000" />
+      <workItem from="1563848491490" duration="18048000" />
+      <workItem from="1563878619275" duration="10327000" />
+      <workItem from="1563901104312" duration="23000" />
+      <workItem from="1563901172023" duration="53000" />
+      <workItem from="1563937542418" duration="10472000" />
+      <workItem from="1563965663761" duration="12681000" />
+      <workItem from="1563991287129" duration="226000" />
+      <workItem from="1564025944041" duration="13930000" />
+      <workItem from="1564055362308" duration="8056000" />
+      <workItem from="1564105531183" duration="69000" />
+      <workItem from="1564146991003" duration="336000" />
+      <workItem from="1564153664645" duration="3417000" />
+      <workItem from="1564214727049" duration="9938000" />
     </task>
     <task id="LOCAL-00001" summary="完成60%">
       <created>1563187875280</created>
@@ -394,11 +284,15 @@
       <option name="project" value="LOCAL" />
       <updated>1563448995379</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="90%">
+      <created>1563526643950</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1563526643950</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85128000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -409,46 +303,24 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49720672" visible="true" weight="0.24212034" />
-      <window_info id="Structure" order="1" sideWeight="0.5027933" side_tool="true" weight="0.34813753" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" sideWeight="0.50139666" side_tool="true" weight="0.24283667" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32960895" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32960895" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32960895" />
-      <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.32960895" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32960895" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info anchor="right" id="Maven" order="5" />
-      <window_info anchor="right" id="Capture Analysis" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Database" order="8" side_tool="true" weight="0.3295129" />
-    </layout>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="UpdateCopyrightCheckinHandler">
     <option name="UPDATE_COPYRIGHT" value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -460,515 +332,7 @@
     <MESSAGE value="Anti HealthTag" />
     <MESSAGE value="用了一堆骚方法，几乎全部重写" />
     <MESSAGE value="大致完成" />
-    <option name="LAST_COMMIT_MESSAGE" value="大致完成" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/com/google/common/io/ByteSource.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/com/google/common/io/Files.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="122" column="23" selection-start-line="122" selection-start-column="23" selection-end-line="122" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://J:/Java/jdk1.8.0_211/src.zip!/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="840" column="19" selection-start-line="840" selection-start-column="19" selection-end-line="840" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/util/Vector.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6426">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/util/NumberConversions.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/Location.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="299" column="47" lean-forward="true" selection-start-line="299" selection-start-column="47" selection-end-line="299" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/ConcurrentSet.java" />
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.13.2.jar!/net/minecraft/server/v1_13_R2/PacketPlayInChat.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-286">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.9.4.jar!/net/minecraft/server/v1_9_R2/PlayerConnectionUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.9.4.jar!/net/minecraft/server/v1_9_R2/EntityPlayer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="941" column="23" selection-start-line="941" selection-start-column="23" selection-end-line="941" selection-end-column="23" />
-          <folding>
-            <element signature="e#37630#37631#0" expanded="true" />
-            <element signature="e#37676#37677#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.9.4.jar!/net/minecraft/server/v1_9_R2/PlayerConnection.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1918">
-          <caret line="1026" column="9" lean-forward="true" selection-start-line="1026" selection-start-column="9" selection-end-line="1026" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_10_R1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="17" column="67" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_11_R1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="17" column="67" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/GameUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="30" column="19" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="46">
-            <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/AxisAlignedBB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="39" column="24" lean-forward="true" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/annotation/Cmd.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/annotation/LoadFromConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="31" column="17" lean-forward="true" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2084">
-          <caret line="294" column="106" selection-start-line="294" selection-start-column="106" selection-end-line="294" selection-end-column="106" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="17" column="8" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/message.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.9.4.jar!/org/bukkit/entity/Player.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-561">
-          <caret line="243" column="18" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.11.2.jar!/org/bukkit/entity/Player.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="262" column="18" selection-start-line="262" selection-start-column="9" selection-end-line="262" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Sign.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Team.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/MessageManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="44" column="35" lean-forward="true" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/craftbukkit/v1_12_R1/inventory/CraftMetaItem.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="851">
-          <caret line="87" column="4" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/packet/ChannelHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_9_R2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/NmsUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/VersionUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_13_R2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="35" selection-start-column="35" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_14_R1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="35" selection-start-column="35" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/craftbukkit/v1_12_R1/inventory/CraftItemFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/inventory/ItemFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/inventory/ItemStack.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding>
-            <element signature="e#1074#1075#0" expanded="true" />
-            <element signature="e#1103#1104#0" expanded="true" />
-            <element signature="e#1188#1189#0" expanded="true" />
-            <element signature="e#1232#1233#0" expanded="true" />
-            <element signature="e#1283#1284#0" expanded="true" />
-            <element signature="e#1325#1326#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/INMS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="35" selection-start-column="35" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/nms/v1_12_R1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/FileUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="23" column="6" lean-forward="true" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/util/WorldUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="21" column="62" lean-forward="true" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/ConfigManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
-          <caret line="46" column="83" selection-start-line="46" selection-start-column="83" selection-end-line="46" selection-end-column="83" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Resource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/net/minecraft/server/v1_12_R1/EntityZombie.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="153" column="38" selection-start-line="153" selection-start-column="34" selection-end-line="153" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="51" column="12" selection-start-line="51" selection-start-column="12" selection-end-line="51" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/listener/EventListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="64" column="28" lean-forward="true" selection-start-line="64" selection-start-column="28" selection-end-line="64" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Minecraft/Plugin/Cores/Spigot1.12.2.jar!/org/bukkit/configuration/file/YamlConfiguration.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="37" column="22" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/config/YamlConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="61" column="20" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/ApexBattle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="92" column="39" selection-start-line="92" selection-start-column="39" selection-end-line="92" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/xyz/hstudio/apexbattle/game/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="255" column="8" lean-forward="true" selection-start-line="255" selection-start-column="8" selection-end-line="255" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2848#5003#0" expanded="true" />
-            <element signature="e#5002#5003#0" expanded="true" />
-            <element signature="e#7366#7367#0" expanded="true" />
-            <element signature="e#11596#11597#0" expanded="true" />
-            <element signature="e#11767#11768#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <last-edited>ApexBattle</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>ApexBattle</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.19305556" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Spigot</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+    <MESSAGE value="90%" />
+    <option name="LAST_COMMIT_MESSAGE" value="90%" />
   </component>
 </project>

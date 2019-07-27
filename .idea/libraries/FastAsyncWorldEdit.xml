@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="FastAsyncWorldEdit">
-    <CLASSES>
-      <root url="jar://E:/Minecraft/Plugin/Depends/FastAsyncWorldEdit.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

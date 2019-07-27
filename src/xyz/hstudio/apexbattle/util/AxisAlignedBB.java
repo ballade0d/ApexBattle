@@ -23,9 +23,6 @@ public class AxisAlignedBB implements Cloneable, ConfigurationSerializable {
     @Setter
     private World world;
 
-    // 玩家的碰撞箱
-    public static final AxisAlignedBB playerCollisionBox = new AxisAlignedBB(new Vector(-0.3, 0, -0.3), new Vector(0.3, 1.8, 0.3), null);
-
     public AxisAlignedBB(final Vector min, final Vector max, final World world) {
         this.min = min;
         this.max = max;

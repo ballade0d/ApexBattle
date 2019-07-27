@@ -2,10 +2,27 @@ name: ApexBattle
 main: xyz.hstudio.apexbattle.ApexBattle
 version: '1.0'
 author: MrCraftGoo
-depend: [WorldEdit, FastAsyncWorldEdit]
 commands:
   apex:
     description: Main command
 permissions:
   apex.command.use:
     default: true
+  apex.command.create:
+    default: op
+  apex.command.setregion:
+    default: op
+  apex.command.setlobby:
+    default: op
+  apex.command.setspectate:
+    default: op
+  apex.command.addresource:
+    default: op
+  apex.command.addteam:
+    default: op
+  apex.command.addshop:
+    default: op
+  apex.command.save:
+    default: op
+  apex.createsign:
+    default: op
